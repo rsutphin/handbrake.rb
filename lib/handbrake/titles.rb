@@ -4,14 +4,20 @@ require 'handbrake'
 
 module HandBrake
   class Titles < Hash
-    attr_reader :raw_output, :raw_tree
+    attr_accessor :raw_output, :raw_tree
 
-    def initialize(output)
+    def self.from_output(output)
+      self.new.tap do |titles|
+        titles.raw_output = output
+        titles.raw_tree.children.
+          collect { |title_node| Title.from_tree(title_node) }.
+          each { |title| titles[title.number] = title }
+      end
+    end
+
+    def raw_output=(output)
       @raw_output = output
       @raw_tree = extract_tree
-      raw_tree.children.collect { |title_node| Title.new(title_node) }.each do |title|
-        self[title.number] = title
-      end
     end
 
     private
@@ -55,30 +61,39 @@ module HandBrake
   class Title
     include DurationAsSeconds
 
-    attr_reader :number, :duration, :chapters
+    attr_accessor :number, :duration, :chapters
+    attr_writer :main_feature
 
-    def initialize(title_node)
-      @node = title_node
-      @number = title_node.name.scan(/title (\d+)/).first.first.to_i
-      @duration = title_node.children.
-        detect { |c| c.name =~ /duration/ }.name.
-        scan(/duration: (\d\d:\d\d:\d\d)/).first.first
-      @chapters = title_node['chapters:'].children.collect { |ch_node| Chapter.new(ch_node) }
+    def self.from_tree(title_node)
+      self.new.tap do |title|
+        title.number = title_node.name.scan(/title (\d+)/).first.first.to_i
+        title.duration = title_node.children.
+          detect { |c| c.name =~ /duration/ }.name.
+          scan(/duration: (\d\d:\d\d:\d\d)/).first.first
+        title.chapters = title_node['chapters:'].children.
+          collect { |ch_node| Chapter.from_tree(ch_node) }
+        title.main_feature = title_node.children.detect { |c| c.name =~ /Main Feature/ }
+      end
     end
 
     def main_feature?
-      @node.children.detect { |c| c.name =~ /Main Feature/ }
+      @main_feature
+    end
+
+    def chapters
+      @chapters ||= []
     end
   end
 
   class Chapter
     include DurationAsSeconds
 
-    attr_reader :duration
+    attr_accessor :duration
 
-    def initialize(chapter_node)
-      @node = chapter_node
-      @duration = chapter_node.name.scan(/duration (\d\d:\d\d:\d\d)/).first.first
+    def self.from_tree(chapter_node)
+      self.new.tap do |ch|
+        ch.duration = chapter_node.name.scan(/duration (\d\d:\d\d:\d\d)/).first.first
+      end
     end
   end
 end

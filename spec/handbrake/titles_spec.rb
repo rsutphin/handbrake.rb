@@ -3,7 +3,7 @@ require File.expand_path('../../spec_helper.rb', __FILE__)
 module HandBrake
   describe Titles do
     let(:body) { File.read(File.expand_path('../sample-titles-scan.err', __FILE__)) }
-    let(:titles) { Titles.new(body) }
+    let(:titles) { Titles.from_output(body) }
 
     it 'contains all the titles' do
       titles.size.should == 5
@@ -42,7 +42,7 @@ module HandBrake
 
   describe Title do
     let(:body) { File.read(File.expand_path('../sample-titles-scan.err', __FILE__)) }
-    let(:titles) { Titles.new(body) }
+    let(:titles) { Titles.from_output(body) }
 
     let(:title_1) { titles[1] }
     let(:title_3) { titles[3] }
