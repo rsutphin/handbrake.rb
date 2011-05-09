@@ -34,15 +34,15 @@ A brief sample:
 
     hb = HandBrake::CLI.new(:bin_path => '/Applications/HandBrakeCLI', :trace => false)
 
-    project = hb.input('/Volumes/Arcturan Megafreighter/DVDs/A/VIDEO_TS')
+    project = hb.input('/Volumes/Arcturan Megafreighter/DVDs/L')
 
     titles = project.scan
-    titles[0].main_feature?       # => true
-    titles[0].duration            # => "01:21:18"
-    titles[0].seconds             # => 4878
-    titles[0].chapters.size       # => 23
-    titles[0].chapters[2].seconds # => 208
-    titles[0].number              # => 1
+    titles[1].number              # => 1
+    titles[1].main_feature?       # => true
+    titles[1].duration            # => "01:21:18"
+    titles[1].seconds             # => 4878
+    titles[1].chapters.size       # => 23
+    titles[1].chapters[2].seconds # => 208
 
     project.title(1).
       preset('Normal').
@@ -97,10 +97,9 @@ values:
 
 * `output`: triggers a transcode using all the options set up to this
   point.
-* `scan`: triggers a title scan and returns an `Array`-like structure
+* `scan`: triggers a title scan and returns a `Hash`-like structure
   of {HandBrake::Title} objects describing the contents of the
-  input. Note that, per usual ruby practices, this array will use
-  zero-based indicies.
+  input. The hash is indexed by title number.
 * `update`: returns true or false depending on whether the version of
   HandBrakeCLI in use is up to date.
 * `preset_list`: returns a hash containing all the known presets and

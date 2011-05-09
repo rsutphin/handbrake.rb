@@ -1,0 +1,375 @@
+[21:47:17] hb_init: checking cpu count
+[21:47:17] hb_init: starting libhb thread
+HandBrake 0.9.5 (2011010300) - Darwin x86_64 - http://handbrake.fr
+2 CPUs detected
+Opening /Volumes/Arcturan Megafreighter/DVDs/F/D2/...
+[21:47:17] hb_scan: path=/Volumes/Arcturan Megafreighter/DVDs/F/D2/, title_index=0
+libbluray/bdnav/index_parse.c:157: indx_parse(): error opening /Volumes/Arcturan Megafreighter/DVDs/F/D2//BDMV/index.bdmv
+libbluray/bluray.c:960: nav_get_title_list(/Volumes/Arcturan Megafreighter/DVDs/F/D2/) failed (0x102013c00)
+[21:47:17] bd: not a bd - trying as a stream/file instead
+libdvdnav: Using dvdnav version 4.1.3
+libdvdread: Encrypted DVD support unavailable.
+libdvdread: Couldn't find device name.
+libdvdnav: Can't read name block. Probably not a DVD-ROM device.
+libdvdnav: Unable to find map file '/Users/rsutphin/.dvdnav/.map'
+libdvdnav: DVD disk reports itself with Region mask 0x00fe0000. Regions: 1
+libdvdread: Encrypted DVD support unavailable.
+libdvdread: Couldn't find device name.
+[21:47:17] scan: DVD has 11 title(s)
+[21:47:17] scan: scanning title 1
+[21:47:17] scan: opening IFO for VTS 7
+[21:47:17] scan: duration is 00:43:57 (2637166 ms)
+[21:47:17] pgc_id: 1, pgn: 1: pgc: 0x10162b720
+[21:47:17] scan: vts=7, ttn=1, cells=0->14, blocks=0->970349, 970350 blocks
+[21:47:17] scan: checking audio 1
+[21:47:17] scan: id=80bd, lang=English (AC3), 3cc=eng ext=1
+[21:47:17] scan: checking audio 2
+[21:47:17] scan: id=81bd, lang=Francais (AC3), 3cc=fra ext=1
+[21:47:17] scan: checking audio 3
+[21:47:17] scan: id=82bd, lang=Espanol (AC3), 3cc=spa ext=1
+[21:47:17] scan: checking audio 4
+[21:47:17] scan: id=83bd, lang=English (AC3) (Director's Commentary 1), 3cc=eng ext=3
+[21:47:17] scan: checking subtitle 1
+[21:47:17] scan: id=24bd, lang=English (Closed Caption), 3cc=eng
+[21:47:17] scan: checking subtitle 2
+[21:47:17] scan: id=25bd, lang=Espanol, 3cc=spa
+[21:47:17] scan: checking subtitle 3
+[21:47:17] scan: id=26bd, lang=Francais (Forced Caption), 3cc=fra
+[21:47:17] scan: checking subtitle 4
+[21:47:17] scan: id=27bd, lang=Espanol (Forced Caption), 3cc=spa
+[21:47:17] scan: title 1 has 13 chapters
+[21:47:17] scan: chap 1 c=0->0, b=0->48234 (48235), 133261 ms
+[21:47:17] scan: chap 2 c=1->1, b=48235->72867 (24633), 52265 ms
+[21:47:17] scan: chap 3 c=2->2, b=72868->165941 (93074), 212374 ms
+[21:47:17] scan: chap 4 c=3->3, b=165942->255356 (89415), 248727 ms
+[21:47:17] scan: chap 5 c=4->5, b=255357->371185 (115829), 297854 ms
+[21:47:17] scan: chap 6 c=6->6, b=371186->432383 (61198), 193352 ms
+[21:47:17] scan: chap 7 c=7->7, b=432384->555633 (123250), 329586 ms
+[21:47:17] scan: chap 8 c=8->9, b=555634->678206 (122573), 359803 ms
+[21:47:17] scan: chap 9 c=10->10, b=678207->775626 (97420), 291520 ms
+[21:47:17] scan: chap 10 c=11->11, b=775627->888448 (112822), 272688 ms
+[21:47:17] scan: chap 11 c=12->12, b=888449->964797 (76349), 207489 ms
+[21:47:17] scan: chap 12 c=13->13, b=964798->970344 (5547), 38065 ms
+[21:47:17] scan: chap 13 c=14->14, b=970345->970349 (5), 176 ms
+[21:47:17] scan: aspect = 0
+[21:47:17] scan: scanning title 2
+[21:47:17] scan: opening IFO for VTS 1
+[21:47:17] scan: duration is 00:42:45 (2565000 ms)
+[21:47:17] pgc_id: 1, pgn: 1: pgc: 0x102802fc0
+[21:47:17] scan: vts=1, ttn=1, cells=0->14, blocks=0->930714, 930715 blocks
+[21:47:17] scan: checking audio 1
+[21:47:17] scan: id=80bd, lang=English (AC3), 3cc=eng ext=1
+[21:47:17] scan: checking audio 2
+[21:47:17] scan: id=81bd, lang=Francais (AC3), 3cc=fra ext=1
+[21:47:17] scan: checking audio 3
+[21:47:17] scan: id=82bd, lang=Espanol (AC3), 3cc=spa ext=1
+[21:47:17] scan: checking subtitle 1
+[21:47:17] scan: id=24bd, lang=English (Closed Caption), 3cc=eng
+[21:47:17] scan: checking subtitle 2
+[21:47:17] scan: id=25bd, lang=Espanol, 3cc=spa
+[21:47:17] scan: checking subtitle 3
+[21:47:17] scan: id=26bd, lang=Francais (Forced Caption), 3cc=fra
+[21:47:17] scan: checking subtitle 4
+[21:47:17] scan: id=27bd, lang=Espanol (Forced Caption), 3cc=spa
+[21:47:17] scan: title 2 has 13 chapters
+[21:47:17] scan: chap 1 c=0->0, b=0->91764 (91765), 266589 ms
+[21:47:17] scan: chap 2 c=1->1, b=91765->113445 (21681), 52245 ms
+[21:47:17] scan: chap 3 c=2->2, b=113446->167355 (53910), 129381 ms
+[21:47:17] scan: chap 4 c=3->3, b=167356->281256 (113901), 328717 ms
+[21:47:17] scan: chap 5 c=4->5, b=281257->391970 (110714), 278721 ms
+[21:47:17] scan: chap 6 c=6->6, b=391971->473207 (81237), 219498 ms
+[21:47:17] scan: chap 7 c=7->7, b=473208->557894 (84687), 232371 ms
+[21:47:17] scan: chap 8 c=8->8, b=557895->610644 (52750), 159441 ms
+[21:47:17] scan: chap 9 c=9->10, b=610645->744470 (133826), 363871 ms
+[21:47:17] scan: chap 10 c=11->11, b=744471->815949 (71479), 215326 ms
+[21:47:17] scan: chap 11 c=12->12, b=815950->924401 (108452), 279499 ms
+[21:47:17] scan: chap 12 c=13->13, b=924402->930709 (6308), 39159 ms
+[21:47:17] scan: chap 13 c=14->14, b=930710->930714 (5), 176 ms
+[21:47:17] scan: aspect = 0
+[21:47:17] scan: scanning title 3
+[21:47:17] scan: opening IFO for VTS 2
+[21:47:17] scan: duration is 00:43:54 (2634186 ms)
+[21:47:17] pgc_id: 1, pgn: 1: pgc: 0x10162c840
+[21:47:17] scan: vts=2, ttn=1, cells=0->14, blocks=0->983330, 983331 blocks
+[21:47:17] scan: checking audio 1
+[21:47:17] scan: id=80bd, lang=English (AC3), 3cc=eng ext=1
+[21:47:17] scan: checking audio 2
+[21:47:17] scan: id=81bd, lang=Francais (AC3), 3cc=fra ext=1
+[21:47:17] scan: checking audio 3
+[21:47:17] scan: id=82bd, lang=Espanol (AC3), 3cc=spa ext=1
+[21:47:17] scan: checking subtitle 1
+[21:47:17] scan: id=24bd, lang=English (Closed Caption), 3cc=eng
+[21:47:17] scan: checking subtitle 2
+[21:47:17] scan: id=25bd, lang=Espanol, 3cc=spa
+[21:47:17] scan: checking subtitle 3
+[21:47:17] scan: id=26bd, lang=Francais (Forced Caption), 3cc=fra
+[21:47:17] scan: checking subtitle 4
+[21:47:17] scan: id=27bd, lang=Espanol (Forced Caption), 3cc=spa
+[21:47:17] scan: title 3 has 13 chapters
+[21:47:17] scan: chap 1 c=0->0, b=0->141945 (141946), 308545 ms
+[21:47:17] scan: chap 2 c=1->1, b=141946->164192 (22247), 52230 ms
+[21:47:17] scan: chap 3 c=2->2, b=164193->243701 (79509), 200456 ms
+[21:47:17] scan: chap 4 c=3->3, b=243702->302217 (58516), 197242 ms
+[21:47:17] scan: chap 5 c=4->5, b=302218->369663 (67446), 222592 ms
+[21:47:17] scan: chap 6 c=6->6, b=369664->477178 (107515), 271509 ms
+[21:47:17] scan: chap 7 c=7->7, b=477179->571211 (94033), 267348 ms
+[21:47:17] scan: chap 8 c=8->9, b=571212->697854 (126643), 337434 ms
+[21:47:17] scan: chap 9 c=10->10, b=697855->818147 (120293), 278528 ms
+[21:47:17] scan: chap 10 c=11->11, b=818148->910684 (92537), 241462 ms
+[21:47:17] scan: chap 11 c=12->12, b=910685->976639 (65955), 218378 ms
+[21:47:17] scan: chap 12 c=13->13, b=976640->983325 (6686), 38280 ms
+[21:47:17] scan: chap 13 c=14->14, b=983326->983330 (5), 176 ms
+[21:47:17] scan: aspect = 0
+[21:47:17] scan: scanning title 4
+[21:47:17] scan: opening IFO for VTS 3
+[21:47:17] scan: duration is 00:00:00 (176 ms)
+[21:47:17] scan: ignoring title (too short)
+[21:47:17] scan: scanning title 5
+[21:47:17] scan: opening IFO for VTS 4
+[21:47:17] scan: duration is 00:00:08 (8000 ms)
+[21:47:17] scan: ignoring title (too short)
+[21:47:17] scan: scanning title 6
+[21:47:17] scan: opening IFO for VTS 5
+[21:47:17] scan: duration is 00:00:11 (11176 ms)
+[21:47:17] pgc_id: 1, pgn: 1: pgc: 0x10162ba90
+[21:47:17] scan: vts=5, ttn=1, cells=0->1, blocks=0->4502, 4503 blocks
+[21:47:17] scan: checking audio 1
+[21:47:17] scan: id=80bd, lang=English (AC3), 3cc=eng ext=1
+[21:47:17] scan: title 6 has 2 chapters
+[21:47:17] scan: chap 1 c=0->0, b=0->4497 (4498), 11000 ms
+[21:47:17] scan: chap 2 c=1->1, b=4498->4502 (5), 176 ms
+[21:47:17] scan: aspect = 0
+[21:47:17] scan: scanning title 7
+[21:47:17] scan: opening IFO for VTS 5
+[21:47:17] scan: duration is 00:00:00 (176 ms)
+[21:47:17] scan: ignoring title (too short)
+[21:47:17] scan: scanning title 8
+[21:47:17] scan: opening IFO for VTS 5
+[21:47:17] scan: duration is 00:00:00 (176 ms)
+[21:47:17] scan: ignoring title (too short)
+[21:47:17] scan: scanning title 9
+[21:47:17] scan: opening IFO for VTS 7
+[21:47:17] scan: duration is 00:00:00 (176 ms)
+[21:47:17] scan: ignoring title (too short)
+[21:47:17] scan: scanning title 10
+[21:47:17] scan: opening IFO for VTS 6
+[21:47:17] scan: duration is 00:00:02 (2176 ms)
+[21:47:17] scan: ignoring title (too short)
+[21:47:17] scan: scanning title 11
+[21:47:17] scan: opening IFO for VTS 8
+[21:47:17] scan: duration is 00:43:57 (2637166 ms)
+[21:47:17] pgc_id: 1, pgn: 1: pgc: 0x10162e090
+[21:47:17] scan: vts=8, ttn=1, cells=0->14, blocks=0->960369, 960370 blocks
+[21:47:17] scan: checking audio 1
+[21:47:17] scan: id=80bd, lang=English (AC3), 3cc=eng ext=1
+[21:47:17] scan: checking audio 2
+[21:47:17] scan: id=81bd, lang=Francais (AC3), 3cc=fra ext=1
+[21:47:17] scan: checking audio 3
+[21:47:17] scan: id=82bd, lang=Espanol (AC3), 3cc=spa ext=1
+[21:47:17] scan: checking subtitle 1
+[21:47:17] scan: id=24bd, lang=English (Closed Caption), 3cc=eng
+[21:47:17] scan: checking subtitle 2
+[21:47:17] scan: id=25bd, lang=Espanol, 3cc=spa
+[21:47:17] scan: checking subtitle 3
+[21:47:17] scan: id=26bd, lang=Francais (Forced Caption), 3cc=fra
+[21:47:17] scan: checking subtitle 4
+[21:47:17] scan: id=27bd, lang=Espanol (Forced Caption), 3cc=spa
+[21:47:17] scan: title 11 has 13 chapters
+[21:47:17] scan: chap 1 c=0->0, b=0->146615 (146616), 389022 ms
+[21:47:17] scan: chap 2 c=1->1, b=146616->167875 (21260), 53390 ms
+[21:47:17] scan: chap 3 c=2->2, b=167876->250880 (83005), 231750 ms
+[21:47:17] scan: chap 4 c=3->4, b=250881->335123 (84243), 267027 ms
+[21:47:17] scan: chap 5 c=5->5, b=335124->452660 (117537), 318005 ms
+[21:47:17] scan: chap 6 c=6->6, b=452661->499956 (47296), 138366 ms
+[21:47:17] scan: chap 7 c=7->7, b=499957->606266 (106310), 273891 ms
+[21:47:17] scan: chap 8 c=8->9, b=606267->703463 (97197), 223786 ms
+[21:47:17] scan: chap 9 c=10->10, b=703464->774131 (70668), 183783 ms
+[21:47:17] scan: chap 10 c=11->11, b=774132->895144 (121013), 326015 ms
+[21:47:17] scan: chap 11 c=12->12, b=895145->954778 (59634), 193684 ms
+[21:47:17] scan: chap 12 c=13->13, b=954779->960364 (5586), 38264 ms
+[21:47:17] scan: chap 13 c=14->14, b=960365->960369 (5), 176 ms
+[21:47:17] scan: aspect = 0
+libdvdnav: DVD disk reports itself with Region mask 0x00fe0000. Regions: 1
+libdvdnav: Suspected RCE Region Protection!!!
+[21:47:18] scan: decoding previews for title 1
+libdvdnav: DVD disk reports itself with Region mask 0x00fe0000. Regions: 1
+libdvdnav: Suspected RCE Region Protection!!!
+libdvdnav: Suspected RCE Region Protection!!!
+[21:47:18] scan: title angle(s) 1
+[21:47:18] scan: audio 0x80bd: AC-3, rate=48000Hz, bitrate=192000 English (AC3) (Dolby Surround)
+[21:47:18] scan: audio 0x81bd: AC-3, rate=48000Hz, bitrate=192000 Francais (AC3) (Dolby Surround)
+[21:47:18] scan: audio 0x82bd: AC-3, rate=48000Hz, bitrate=192000 Espanol (AC3) (Dolby Surround)
+[21:47:18] scan: audio 0x83bd: AC-3, rate=48000Hz, bitrate=192000 English (AC3) (Director's Commentary 1) (2.0 ch)
+[21:47:18] scan: 10 previews, 720x480, 23.976 fps, autocrop = 0/0/0/0, aspect 16:9, PAR 32:27
+[21:47:18] scan: decoding previews for title 2
+libdvdnav: DVD disk reports itself with Region mask 0x00fe0000. Regions: 1
+Scanning title 2 of 11...
+libdvdnav: Suspected RCE Region Protection!!!
+libdvdnav: Suspected RCE Region Protection!!!
+[21:47:18] scan: title angle(s) 1
+[21:47:19] scan: audio 0x82bd: AC-3, rate=48000Hz, bitrate=192000 Espanol (AC3) (Dolby Surround)
+[21:47:19] scan: audio 0x80bd: AC-3, rate=48000Hz, bitrate=192000 English (AC3) (Dolby Surround)
+[21:47:19] scan: audio 0x81bd: AC-3, rate=48000Hz, bitrate=192000 Francais (AC3) (Dolby Surround)
+[21:47:19] scan: 10 previews, 720x480, 23.976 fps, autocrop = 0/0/0/0, aspect 16:9, PAR 32:27
+[21:47:19] scan: decoding previews for title 3
+libdvdnav: DVD disk reports itself with Region mask 0x00fe0000. Regions: 1
+libdvdnav: Suspected RCE Region Protection!!!
+libdvdnav: Suspected RCE Region Protection!!!
+[21:47:19] scan: title angle(s) 1
+[21:47:19] scan: audio 0x81bd: AC-3, rate=48000Hz, bitrate=192000 Francais (AC3) (Dolby Surround)
+[21:47:19] scan: audio 0x82bd: AC-3, rate=48000Hz, bitrate=192000 Espanol (AC3) (Dolby Surround)
+[21:47:19] scan: audio 0x80bd: AC-3, rate=48000Hz, bitrate=192000 English (AC3) (Dolby Surround)
+Scanning title 3 of 11...
+[21:47:19] scan: 10 previews, 720x480, 23.976 fps, autocrop = 0/0/0/0, aspect 16:9, PAR 32:27
+[21:47:19] scan: decoding previews for title 6
+libdvdnav: DVD disk reports itself with Region mask 0x00fe0000. Regions: 1
+libdvdnav: Suspected RCE Region Protection!!!
+[21:47:19] scan: title angle(s) 1
+[21:47:19] scan: audio 0x80bd: AC-3, rate=48000Hz, bitrate=448000 English (AC3) (5.1 ch)
+[21:47:19] scan: 10 previews, 720x480, 29.970 fps, autocrop = 0/0/0/0, aspect 16:9, PAR 32:27
+[21:47:19] scan: decoding previews for title 11
+libdvdnav: DVD disk reports itself with Region mask 0x00fe0000. Regions: 1
+libdvdnav: Suspected RCE Region Protection!!!
+libdvdnav: Suspected RCE Region Protection!!!
+[21:47:19] scan: title angle(s) 1
+[21:47:19] scan: audio 0x81bd: AC-3, rate=48000Hz, bitrate=192000 Francais (AC3) (Dolby Surround)
+[21:47:19] scan: audio 0x82bd: AC-3, rate=48000Hz, bitrate=192000 Espanol (AC3) (Dolby Surround)
+[21:47:19] scan: audio 0x80bd: AC-3, rate=48000Hz, bitrate=192000 English (AC3) (Dolby Surround)
+Scanning title 11 of 11...
+[21:47:19] scan: 10 previews, 720x480, 23.976 fps, autocrop = 0/0/0/0, aspect 16:9, PAR 32:27
+[21:47:19] scan: title (0) job->width:720, job->height:400
+[21:47:19] scan: title (1) job->width:720, job->height:400
+[21:47:19] scan: title (2) job->width:720, job->height:400
+[21:47:19] scan: title (3) job->width:720, job->height:400
+[21:47:19] scan: title (4) job->width:720, job->height:400
+[21:47:19] libhb: scan thread found 5 valid title(s)
++ title 1:
+  + Main Feature
+  + vts 7, ttn 1, cells 0->14 (970350 blocks)
+  + duration: 00:43:57
+  + size: 720x480, pixel aspect: 32/27, display aspect: 1.78, 23.976 fps
+  + autocrop: 0/0/0/0
+  + chapters:
+    + 1: cells 0->0, 48235 blocks, duration 00:02:13
+    + 2: cells 1->1, 24633 blocks, duration 00:00:52
+    + 3: cells 2->2, 93074 blocks, duration 00:03:32
+    + 4: cells 3->3, 89415 blocks, duration 00:04:09
+    + 5: cells 4->5, 115829 blocks, duration 00:04:58
+    + 6: cells 6->6, 61198 blocks, duration 00:03:13
+    + 7: cells 7->7, 123250 blocks, duration 00:05:30
+    + 8: cells 8->9, 122573 blocks, duration 00:06:00
+    + 9: cells 10->10, 97420 blocks, duration 00:04:52
+    + 10: cells 11->11, 112822 blocks, duration 00:04:33
+    + 11: cells 12->12, 76349 blocks, duration 00:03:27
+    + 12: cells 13->13, 5547 blocks, duration 00:00:38
+    + 13: cells 14->14, 5 blocks, duration 00:00:00
+  + audio tracks:
+    + 1, English (AC3) (Dolby Surround) (iso639-2: eng), 48000Hz, 192000bps
+    + 2, Francais (AC3) (Dolby Surround) (iso639-2: fra), 48000Hz, 192000bps
+    + 3, Espanol (AC3) (Dolby Surround) (iso639-2: spa), 48000Hz, 192000bps
+    + 4, English (AC3) (Director's Commentary 1) (2.0 ch) (iso639-2: eng), 48000Hz, 192000bps
+  + subtitle tracks:
+    + 1, English (Closed Caption) (iso639-2: eng) (Bitmap)(VOBSUB)
+    + 2, Espanol (iso639-2: spa) (Bitmap)(VOBSUB)
+    + 3, Francais (Forced Caption) (iso639-2: fra) (Bitmap)(VOBSUB)
+    + 4, Espanol (Forced Caption) (iso639-2: spa) (Bitmap)(VOBSUB)
+    + 5, Closed Captions (iso639-2: eng) (Text)(CC)
++ title 2:
+  + vts 1, ttn 1, cells 0->14 (930715 blocks)
+  + duration: 00:42:45
+  + size: 720x480, pixel aspect: 32/27, display aspect: 1.78, 23.976 fps
+  + autocrop: 0/0/0/0
+  + chapters:
+    + 1: cells 0->0, 91765 blocks, duration 00:04:27
+    + 2: cells 1->1, 21681 blocks, duration 00:00:52
+    + 3: cells 2->2, 53910 blocks, duration 00:02:09
+    + 4: cells 3->3, 113901 blocks, duration 00:05:29
+    + 5: cells 4->5, 110714 blocks, duration 00:04:39
+    + 6: cells 6->6, 81237 blocks, duration 00:03:39
+    + 7: cells 7->7, 84687 blocks, duration 00:03:52
+    + 8: cells 8->8, 52750 blocks, duration 00:02:39
+    + 9: cells 9->10, 133826 blocks, duration 00:06:04
+    + 10: cells 11->11, 71479 blocks, duration 00:03:35
+    + 11: cells 12->12, 108452 blocks, duration 00:04:39
+    + 12: cells 13->13, 6308 blocks, duration 00:00:39
+    + 13: cells 14->14, 5 blocks, duration 00:00:00
+  + audio tracks:
+    + 1, English (AC3) (Dolby Surround) (iso639-2: eng), 48000Hz, 192000bps
+    + 2, Francais (AC3) (Dolby Surround) (iso639-2: fra), 48000Hz, 192000bps
+    + 3, Espanol (AC3) (Dolby Surround) (iso639-2: spa), 48000Hz, 192000bps
+  + subtitle tracks:
+    + 1, English (Closed Caption) (iso639-2: eng) (Bitmap)(VOBSUB)
+    + 2, Espanol (iso639-2: spa) (Bitmap)(VOBSUB)
+    + 3, Francais (Forced Caption) (iso639-2: fra) (Bitmap)(VOBSUB)
+    + 4, Espanol (Forced Caption) (iso639-2: spa) (Bitmap)(VOBSUB)
+    + 5, Closed Captions (iso639-2: eng) (Text)(CC)
++ title 3:
+  + vts 2, ttn 1, cells 0->14 (983331 blocks)
+  + duration: 01:43:54
+  + size: 720x480, pixel aspect: 32/27, display aspect: 1.78, 23.976 fps
+  + autocrop: 0/0/0/0
+  + chapters:
+    + 1: cells 0->0, 141946 blocks, duration 00:05:09
+    + 2: cells 1->1, 22247 blocks, duration 00:00:52
+    + 3: cells 2->2, 79509 blocks, duration 00:03:20
+    + 4: cells 3->3, 58516 blocks, duration 00:03:37
+    + 5: cells 4->5, 67446 blocks, duration 00:03:23
+    + 6: cells 6->6, 107515 blocks, duration 00:04:32
+    + 7: cells 7->7, 94033 blocks, duration 00:04:27
+    + 8: cells 8->9, 126643 blocks, duration 00:05:37
+    + 9: cells 10->10, 120293 blocks, duration 00:04:39
+    + 10: cells 11->11, 92537 blocks, duration 00:04:01
+    + 11: cells 12->12, 65955 blocks, duration 00:03:38
+    + 12: cells 13->13, 6686 blocks, duration 01:00:38
+    + 13: cells 14->14, 5 blocks, duration 00:00:00
+  + audio tracks:
+    + 1, English (AC3) (Dolby Surround) (iso639-2: eng), 48000Hz, 192000bps
+    + 2, Francais (AC3) (Dolby Surround) (iso639-2: fra), 48000Hz, 192000bps
+    + 3, Espanol (AC3) (Dolby Surround) (iso639-2: spa), 48000Hz, 192000bps
+  + subtitle tracks:
+    + 1, English (Closed Caption) (iso639-2: eng) (Bitmap)(VOBSUB)
+    + 2, Espanol (iso639-2: spa) (Bitmap)(VOBSUB)
+    + 3, Francais (Forced Caption) (iso639-2: fra) (Bitmap)(VOBSUB)
+    + 4, Espanol (Forced Caption) (iso639-2: spa) (Bitmap)(VOBSUB)
+    + 5, Closed Captions (iso639-2: eng) (Text)(CC)
++ title 6:
+  + vts 5, ttn 1, cells 0->1 (4503 blocks)
+  + duration: 00:00:11
+  + size: 720x480, pixel aspect: 32/27, display aspect: 1.78, 29.970 fps
+  + autocrop: 0/0/0/0
+  + chapters:
+    + 1: cells 0->0, 4498 blocks, duration 00:00:11
+    + 2: cells 1->1, 5 blocks, duration 00:00:00
+  + audio tracks:
+    + 1, English (AC3) (5.1 ch) (iso639-2: eng), 48000Hz, 448000bps
+  + subtitle tracks:
++ title 11:
+  + vts 8, ttn 1, cells 0->14 (960370 blocks)
+  + duration: 00:43:57
+  + size: 720x480, pixel aspect: 32/27, display aspect: 1.78, 23.976 fps
+  + autocrop: 0/0/0/0
+  + chapters:
+    + 1: cells 0->0, 146616 blocks, duration 00:06:49
+    + 2: cells 1->1, 21260 blocks, duration 00:00:33
+    + 3: cells 2->2, 83005 blocks, duration 00:03:52
+    + 4: cells 3->4, 84243 blocks, duration 00:04:27
+    + 5: cells 5->5, 117537 blocks, duration 00:05:18
+    + 6: cells 6->6, 47296 blocks, duration 00:02:18
+    + 7: cells 7->7, 106310 blocks, duration 00:04:34
+    + 8: cells 8->9, 97197 blocks, duration 00:03:44
+    + 9: cells 10->10, 70668 blocks, duration 00:03:04
+    + 10: cells 11->11, 121013 blocks, duration 00:05:26
+    + 11: cells 12->12, 59634 blocks, duration 00:03:14
+    + 12: cells 13->13, 5586 blocks, duration 00:00:38
+    + 13: cells 14->14, 5 blocks, duration 00:00:00
+  + audio tracks:
+    + 1, English (AC3) (Dolby Surround) (iso639-2: eng), 48000Hz, 192000bps
+    + 2, Francais (AC3) (Dolby Surround) (iso639-2: fra), 48000Hz, 192000bps
+    + 3, Espanol (AC3) (Dolby Surround) (iso639-2: spa), 48000Hz, 192000bps
+  + subtitle tracks:
+    + 1, English (Closed Caption) (iso639-2: eng) (Bitmap)(VOBSUB)
+    + 2, Espanol (iso639-2: spa) (Bitmap)(VOBSUB)
+    + 3, Francais (Forced Caption) (iso639-2: fra) (Bitmap)(VOBSUB)
+    + 4, Espanol (Forced Caption) (iso639-2: spa) (Bitmap)(VOBSUB)
+    + 5, Closed Captions (iso639-2: eng) (Text)(CC)
+HandBrake has exited.
