@@ -32,7 +32,7 @@ A brief sample:
 
     require 'handbrake'
 
-    hb = HandBrake::CLI.new('/Applications/HandBrakeCLI', :trace => false)
+    hb = HandBrake::CLI.new(:bin_path => '/Applications/HandBrakeCLI', :trace => false)
 
     project = hb.input('/Volumes/Arcturan Megafreighter/DVDs/A/VIDEO_TS')
 
@@ -54,13 +54,16 @@ In additional detail:
 
     require 'handbrake'
 
-    hb = HandBrake::CLI.new(handbrake_cli_path, :trace => true)
+    hb = HandBrake::CLI.new(:bin_path => handbrake_cli_path, :trace => true)
 
 This object carries the path to the HandBrakeCLI bin and other library
 configuration options:
 
-* `:trace`: echos all output from `HandBrakeCLI` to the project's
-  output stream.
+* `:bin_path`: the path to the `HandBrakeCLI` executable. The default
+  is `'HandBrakeCLI'`; i.e., by default it will be searched for on the
+  normal executable path.
+* `:trace`: if true, all output from `HandBrakeCLI` will be echoed to
+  the project's output stream.
 
 ### Set options
 
