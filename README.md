@@ -103,7 +103,7 @@ values:
 * `update`: returns true or false depending on whether the version of
   HandBrakeCLI in use is up to date.
 * `preset_list`: returns a hash containing all the known presets and
-  their options. The structure is `presets[category][name] => args`
+  their options. The structure is `presets[category][name] => args`.
 
 ### Reusing a configuration chain
 
