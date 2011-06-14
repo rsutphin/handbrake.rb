@@ -20,4 +20,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'rubytree', '~> 0.8.1'
 
   s.add_development_dependency 'rspec', '~> 2.5'
+  s.add_development_dependency 'rake', '~> 0.9.0'
 end
