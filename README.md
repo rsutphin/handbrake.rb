@@ -16,12 +16,15 @@ Prerequisites
 -------------
 
 * [HandBrake][hb-dl] and [HandBrakeCLI][cli-dl] (tested with 0.9.5)
-* Ruby and rubygems (tested with 1.8.7, but expected to work elsewhere)
+* Ruby and RubyGems (tested with Ruby 1.8.7 and 1.9.2)
+
+[hb-dl]: http://handbrake.fr/downloads.php
+[cli-dl]: http://handbrake.fr/downloads2.php
 
 Installation
 ------------
 
-`handbrake-ruby` is distributed as a rubygem:
+handbrake.rb is distributed as a rubygem:
 
     $ gem install handbrake
 
@@ -46,7 +49,7 @@ A brief sample:
 
     project.title(1).
       preset('Normal').
-      output('/Users/rsutphin/Movies/project.m4v').
+      output('/Users/rsutphin/Movies/project.m4v')
 
 In additional detail:
 
@@ -79,7 +82,7 @@ E.g., the HandBrakeCLI documentation has this command:
       -q 0.65 -x ref=3:mixed-refs:bframes=6:b-pyramid=1:weightb=1:analyse=all:8x8dct=1:subme=7:me=umh
       :merange=24:filter=-2,-2:trellis=1:no-fast-pskip=1:no-dct-decimate=1:direct=auto
 
-In `handbrake-ruby`, you could build up this command like so:
+In handbrake.rb, you could build up this command like so:
 
     vid_opts = 'ref=3:mixed-refs:bframes=6:b-pyramid=1:weightb=1:analyse=all:8x8dct=1:subme=7:me=umh:merange=24:filter=-2,-2:trellis=1:no-fast-pskip=1:no-dct-decimate=1:direct=auto'
     HandBrake::CLI.new.input('/Volumes/MyBook/VIDEO_TS').verbose.
@@ -126,10 +129,12 @@ configuration chain.
 Additional resources
 --------------------
 
+* Versioning policy: [Semantic versioning](http://semver.org/)
+
 License
 -------
 
-    handbrake-ruby
+    handbrake.rb
     Copyright (C) 2011 Rhett Sutphin.
 
     This library is free software; you can redistribute it and/or
