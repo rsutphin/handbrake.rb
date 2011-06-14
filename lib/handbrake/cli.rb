@@ -26,6 +26,15 @@ module HandBrake
     end
 
     ##
+    # Performs a conversion. This method immediately begins the
+    # transcoding process; set all other options first.
+    #
+    # @return [void]
+    def output(filename)
+      run('--output', filename)
+    end
+
+    ##
     # Performs a title scan. Unlike HandBrakeCLI, if you do not
     # specify a title, this method will return information for all
     # titles. (HandBrakeCLI defaults to only returning information for
@@ -87,7 +96,14 @@ module HandBrake
     private
 
     def run(*more_args)
-      @runner.run(arguments.push(*more_args))
+      @runner.run(arguments.push(*more_args)).tap do |result|
+        unless result.status == 0
+          unless trace?
+            $stderr.puts result.output
+          end
+          raise "HandBrakeCLI execution failed (#{result.status.inspect})"
+        end
+      end
     end
 
     def method_missing(name, *args)

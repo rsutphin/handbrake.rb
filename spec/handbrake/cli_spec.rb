@@ -75,6 +75,13 @@ module HandBrake
         end
       end
 
+      describe '#output' do
+        it 'uses the --output argument' do
+          cli.output('/foo/bar.m4v')
+          runner.actual_arguments.should == %w(--output /foo/bar.m4v)
+        end
+      end
+
       describe '#scan' do
         let(:sample_scan) { File.read(File.expand_path('../sample-titles-scan.err', __FILE__)) }
 
