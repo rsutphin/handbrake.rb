@@ -1,10 +1,32 @@
 require 'handbrake'
 
 module HandBrake
+  ##
+  # The main entry point for this API. See {file:README.md} for usage
+  # examples.
   class CLI
+    ##
+    # The full path (including filename) to the HandBrakeCLI
+    # executable to use.
+    #
+    # @return [String]
     attr_accessor :bin_path
+
+    ##
+    # Set whether trace is enabled.
+    #
+    # @return [Boolean]
     attr_writer :trace
 
+    ##
+    # @param [Hash] options
+    # @option options [String] :bin_path ('HandBrakeCLI') the full
+    #   path to the executable to use
+    # @option options [Boolean] :trace (false) whether {#trace?} is
+    #   enabled
+    # @option options [#run] :runner (a PopenRunner instance) the class
+    #   encapsulating the execution method for HandBrakeCLI. You
+    #   shouldn't usually need to replace this.
     def initialize(options={})
       @bin_path = options[:bin_path] || 'HandBrakeCLI'
       @trace = options[:trace].nil? ? false : options[:trace]
@@ -14,13 +36,21 @@ module HandBrake
     end
 
     ##
-    # Ensures that {#dup} produces a separate copy.
+    # Ensures that `#dup` produces a separate copy.
+    #
+    # @return [void]
     def initialize_copy(original)
       @args = original.instance_eval { @args }.collect { |bit| bit.dup }
     end
 
     ##
     # Is trace enabled?
+    #
+    # If it is enabled, all output from HandBrakeCLI will be streamed
+    # to standard error. If not, the output from HandBrakeCLI will
+    # only be printed if there is a detectable error.
+    #
+    # @return [Boolean]
     def trace?
       @trace
     end
@@ -106,13 +136,19 @@ module HandBrake
       end
     end
 
+    ##
+    # @return [CLI]
     def method_missing(name, *args)
       copy = self.dup
       copy.instance_eval { @args << [name, *(args.collect { |a| a.to_s })] }
       copy
     end
 
+    ##
+    # The default runner. Uses `IO.popen` to spawn HandBrakeCLI.
     class PopenRunner
+      ##
+      # @param [CLI] cli_instance the {CLI} instance whose configuration to share
       def initialize(cli_instance)
         @cli = cli_instance
       end
@@ -127,6 +163,9 @@ module HandBrake
       #   and hangs when the child process fills some buffer
       # Hence, this implementation:
 
+      ##
+      # @param [Array<String>] arguments the arguments to pass to HandBrakeCLI
+      # @return [RunnerResult]
       def run(arguments)
         output = ''
 
