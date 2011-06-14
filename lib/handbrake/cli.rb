@@ -78,9 +78,20 @@ module HandBrake
         @cli = cli_instance
       end
 
+      # Some notes on popen options
+      # - IO.popen on 1.9.2 is much more elegant than on 1.8.7
+      #   (it lets you pass spawn args directly instead of using a
+      #   subshell, so you can more cleanly pass args to the
+      #   executable and redirect streams)
+      # - Open3.popen3 does not let you get the status
+      # - Open4.popen4 does not seem to stream the output and error
+      #   and hangs when the child process fills some buffer
+      # Hence, this implementation:
+
       def run(arguments)
         output = ''
-        cmd = arguments.unshift(@cli.bin_path).push(:err => [:child, :out])
+
+        cmd = "'" + arguments.unshift(@cli.bin_path).join("' '") + "' 2>&1"
 
         $stderr.puts "Spawning HandBrakeCLI using #{cmd.inspect}" if @cli.trace?
         IO.popen(cmd) do |io|

@@ -60,6 +60,21 @@ module HandBrake
       let(:cli) { HandBrake::CLI.new(:runner => runner) }
       let(:runner) { HandBrake::Spec::StaticRunner.new }
 
+      describe 'default runner' do
+        let(:cli) { HandBrake::CLI.new }
+
+        before do
+          `which HandBrakeCLI`
+          unless $? == 0
+            pending 'HandBrakeCLI is not on the path'
+          end
+        end
+
+        it 'works' do
+          lambda { cli.update }.should_not raise_error
+        end
+      end
+
       describe '#scan' do
         let(:sample_scan) { File.read(File.expand_path('../sample-titles-scan.err', __FILE__)) }
 
