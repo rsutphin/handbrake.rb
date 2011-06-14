@@ -60,8 +60,41 @@ module HandBrake
       let(:cli) { HandBrake::CLI.new(:runner => runner) }
       let(:runner) { HandBrake::Spec::StaticRunner.new }
 
+      describe '#scan' do
+        let(:sample_scan) { File.read(File.expand_path('../sample-titles-scan.err', __FILE__)) }
+
+        before do
+          runner.output = sample_scan
+        end
+
+        it 'uses the --scan argument' do
+          cli.scan
+          runner.actual_arguments.last.should == '--scan'
+        end
+
+        it 'defaults to scanning all titles' do
+          cli.scan
+          runner.actual_arguments.should == %w(--title 0 --scan)
+        end
+
+        it 'only scans the specified title if one is specified' do
+          cli.title(3).scan
+          runner.actual_arguments.should == %w(--title 3 --scan)
+        end
+
+        it 'does not permanently modify the argument list when using the default title setting' do
+          cli.scan
+          cli.arguments.should_not include('--title')
+        end
+
+        it 'returns titles from the output' do
+          # The details for this are tested in titles_spec
+          cli.scan.size.should == 5
+        end
+      end
+
       describe '#update' do
-        it 'uses the update argument' do
+        it 'uses the --update argument' do
           cli.update
           runner.actual_arguments.should == %w(--update)
         end

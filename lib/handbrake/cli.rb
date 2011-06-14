@@ -26,6 +26,22 @@ module HandBrake
     end
 
     ##
+    # Performs a title scan. Unlike HandBrakeCLI, if you do not
+    # specify a title, this method will return information for all
+    # titles. (HandBrakeCLI defaults to only returning information for
+    # title 1.)
+    #
+    # @return [Titles]
+    def scan
+      if arguments.include?('--title')
+        result = run('--scan')
+        Titles.from_output(result.output)
+      else
+        title(0).scan
+      end
+    end
+
+    ##
     # Checks to see if the `HandBrakeCLI` instance designated by
     # {#bin_path} is the current version.
     #
@@ -35,7 +51,7 @@ module HandBrake
     #
     # @return [Boolean]
     def update
-      result = @runner.run(arguments.push('--update'))
+      result = run('--update')
       result.output =~ /Your version of HandBrake is up to date./i
     end
 
@@ -43,6 +59,12 @@ module HandBrake
     # @private
     def arguments
       @args.collect { |req, *rest| ["--#{req.to_s.gsub('_', '-')}", *rest] }.flatten
+    end
+
+    private
+
+    def run(*more_args)
+      @runner.run(arguments.push(*more_args))
     end
 
     def method_missing(name, *args)
