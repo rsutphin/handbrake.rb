@@ -124,6 +124,32 @@ module HandBrake
           cli.update.should be_false
         end
       end
+
+      describe '#preset_list' do
+        let(:sample_presets) { File.read(File.expand_path('../sample-preset-list.out', __FILE__)) }
+
+        before do
+          runner.output = sample_presets
+        end
+
+        it 'uses the --preset-list argument' do
+          cli.preset_list
+          runner.actual_arguments.should == %w(--preset-list)
+        end
+
+        it 'returns a hash containing all the categories' do
+          cli.preset_list.keys.sort.should == %w(Apple Legacy Regular)
+        end
+
+        it 'returns a hash containing the presets in each category' do
+          cli.preset_list['Regular'].keys.sort.should == ['High Profile', 'Normal']
+        end
+
+        it 'returns a hash containing the actual args for a particular preset' do
+          cli.preset_list['Regular']['Normal'].should ==
+            '-e x264  -q 20.0 -a 1 -E faac -B 160 -6 dpl2 -R Auto -D 0.0 -f mp4 --strict-anamorphic -m -x ref=2:bframes=2:subme=6:mixed-refs=0:weightb=0:8x8dct=0:trellis=0'
+        end
+      end
     end
   end
 end

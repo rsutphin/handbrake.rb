@@ -56,6 +56,29 @@ module HandBrake
     end
 
     ##
+    # Returns a structure describing the presets that the current
+    # HandBrake install knows about. The structure is a two-level
+    # hash. The keys in the first level are the preset categories. The
+    # keys in the second level are the preset names and the values are
+    # string representations of the arguments for that preset.
+    #
+    # (This method is included for completeness only. This library does
+    # not provide a mechanism to translate the argument lists returned
+    # here into the configuration for a {HandBrake::CLI} instance.)
+    #
+    # @return [Hash]
+    def preset_list
+      result = run('--preset-list')
+      result.output.scan(%r{\< (.*?)\n(.*?)\>}m).inject({}) { |h1, (cat, block)|
+        h1[cat.strip] = block.scan(/\+(.*?):(.*?)\n/).inject({}) { |h2, (name, args)|
+          h2[name.strip] = args.strip
+          h2
+        }
+        h1
+      }
+    end
+
+    ##
     # @private
     def arguments
       @args.collect { |req, *rest| ["--#{req.to_s.gsub('_', '-')}", *rest] }.flatten
