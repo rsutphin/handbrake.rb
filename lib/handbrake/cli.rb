@@ -137,6 +137,13 @@ module HandBrake
     end
 
     ##
+    # Copies this CLI instance and appends another command line switch
+    # plus optional arguments.
+    #
+    # This method does not do any validation of the switch name; if
+    # you use an invalid one, HandBrakeCLI will fail when it is
+    # ultimately invoked.
+    #
     # @return [CLI]
     def method_missing(name, *args)
       copy = self.dup
@@ -145,7 +152,10 @@ module HandBrake
     end
 
     ##
-    # The default runner. Uses `IO.popen` to spawn HandBrakeCLI.
+    # @private
+    # The default runner. Uses `IO.popen` to spawn
+    # HandBrakeCLI. General use of this library does not require
+    # monkeying with this class.
     class PopenRunner
       ##
       # @param [CLI] cli_instance the {CLI} instance whose configuration to share
@@ -182,6 +192,15 @@ module HandBrake
       end
     end
 
+    ##
+    # @private
+    # The raw result of one execution of HandBrakeCLI.
+    #
+    # General use of the library will not require use of this class.
+    #
+    # @attr [String] output a string containing the combined output
+    #   and error streams from the run
+    # @attr [#to_i] status the process exit status for the run
     RunnerResult = Struct.new(:output, :status)
   end
 end

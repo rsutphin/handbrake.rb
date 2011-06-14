@@ -3,9 +3,34 @@ require 'tree'
 require 'handbrake'
 
 module HandBrake
+  ##
+  # And enhanced `Hash` which can self-parse the output from
+  # HandBrakeCLI's `--scan` mode. The keys of this hash will be title
+  # numbers and the values will be {Title} instances.
+  #
+  # @see Title
+  # @see Chapter
   class Titles < Hash
-    attr_accessor :raw_output, :raw_tree
+    ##
+    # The HandBrakeCLI scan output from which this instance was
+    # parsed, if available.
+    #
+    # @return [String,nil]
+    attr_reader :raw_output
 
+    ##
+    # A tree representing the indented output at the end of the
+    # HandBrakeCLI scan output, if available.
+    #
+    # @return [String,nil]
+    attr_reader :raw_tree
+
+    ##
+    # Builds a new {Titles} instance from the output of `HandBrakeCLI
+    # --scan`.
+    #
+    # @param [String] output the raw contents from the scan
+    # @return [Titles] a new, completely initialized title catalog
     def self.from_output(output)
       self.new.tap do |titles|
         titles.raw_output = output
@@ -15,6 +40,14 @@ module HandBrake
       end
     end
 
+    ##
+    # Initializes the {#raw_output} and {#raw_tree} attributes from
+    # the given HandBrakeCLI output. Does not modify the contents of
+    # the hash.
+    #
+    # @param [String] output raw contents from a HandBrakeCLI title
+    #   scan
+    # @return [void]
     def raw_output=(output)
       @raw_output = output
       @raw_tree = extract_tree
@@ -51,19 +84,51 @@ module HandBrake
     end
   end
 
+  ##
+  # Provides a {#seconds} method for an object which has a `duration`
+  # property whose value is a string of the format "hh:mm:ss"
   module DurationAsSeconds
+    ##
+    # The number of seconds described by the duration. E.g., if the
+    # duration were `"1:02:42"`, this method would return `3762`.
+    #
+    # @return [Fixnum]
     def seconds
       @seconds ||= duration.split(':').collect(&:to_i).reverse.
         inject([1, 0]) { |(m, sum), i| [m * 60, sum + i * m] }.last
     end
   end
 
+  ##
+  # Metadata about a single DVD title.
   class Title
     include DurationAsSeconds
 
-    attr_accessor :number, :duration, :chapters
+    ##
+    # @return [Fixnum] The title number of this title (a positive integer).
+    attr_accessor :number
+
+    ##
+    # @return [String] The duration of the title in the format
+    #   "hh:mm:ss"
+    attr_accessor :duration
+
+    ##
+    # @return [Array<Chapter>] The chapters into which the title is
+    #   divided.
+    attr_writer :chapters
+
+    ##
+    # @return [Boolean] Whether HandBrake considers this title the
+    #   "main feature".
     attr_writer :main_feature
 
+    ##
+    # Creates a new instance from the given scan subtree.
+    #
+    # @see Titles.from_output
+    # @param [Tree::TreeNode] title_node
+    # @return [Title] a new, fully initialized instance
     def self.from_tree(title_node)
       self.new.tap do |title|
         title.number = title_node.name.scan(/title (\d+)/).first.first.to_i
@@ -76,20 +141,37 @@ module HandBrake
       end
     end
 
+    ##
+    # @return [Boolean] Whether HandBrake considers this title the
+    #   "main feature".
     def main_feature?
       @main_feature
     end
 
+    ##
+    # @return [Array<Chapter>] The chapters into which the title is
+    #   divided.
     def chapters
       @chapters ||= []
     end
   end
 
+  ##
+  # The metadata about a single chapter in a title of a DVD.
   class Chapter
     include DurationAsSeconds
 
+    ##
+    # @return [String] The duration of the title in the format
+    #   "hh:mm:ss"
     attr_accessor :duration
 
+    ##
+    # Creates a new instance from the given title subtree.
+    #
+    # @see Title.from_tree
+    # @param [Tree::TreeNode] chapter_node
+    # @return [Chapter] a new, fully initialized instance
     def self.from_tree(chapter_node)
       self.new.tap do |ch|
         ch.duration = chapter_node.name.scan(/duration (\d\d:\d\d:\d\d)/).first.first

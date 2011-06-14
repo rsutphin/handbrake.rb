@@ -1,4 +1,4 @@
-Handbrake for Ruby
+HandBrake for Ruby
 ==================
 
 This library provides a lightweight literate ruby wrapper for
@@ -9,8 +9,8 @@ video transcoder.
 [HandBrake]: http://handbrake.fr/
 
 The intent of this library is to make it a bit easier to script
-HandBrake. You will still need to be familiar with [HandBrake][] and
-[HandBrakeCLI][] to make use of it.
+HandBrake. You will still need to be familiar with HandBrake and
+HandBrakeCLI to make use of it.
 
 Prerequisites
 -------------
@@ -131,7 +131,16 @@ Additional resources
 
 * [API docs](http://rubydoc.info/gems/handbrake.rb)
 * [Continuous integration](http://travis-ci.org/#!/rsutphin/handbrake.rb)
+  (note that right now this link only works when there has been a
+  recent build)
 * Versioning policy: [Semantic versioning](http://semver.org/)
+* [Bugs and feature requests](https://github.com/rsutphin/handbrake.rb/issues)
+
+Patches
+-------
+
+Patches with tests will be happily reviewed. Please submit a pull
+request from a topic branch in your own fork on GitHub.
 
 License
 -------

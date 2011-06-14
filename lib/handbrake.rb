@@ -1,3 +1,6 @@
+##
+# @see file:README.md
+# @see CLI The main class
 module HandBrake
   autoload :VERSION, 'handbrake/version'
 
