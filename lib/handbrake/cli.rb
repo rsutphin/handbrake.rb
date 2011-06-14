@@ -8,6 +8,7 @@ module HandBrake
     def initialize(options={})
       @bin_path = options[:bin_path] || 'HandBrakeCLI'
       @trace = options[:trace].nil? ? false : options[:trace]
+      @runner = options[:runner] || PopenRunner.new(self)
 
       @args = []
     end
@@ -25,6 +26,20 @@ module HandBrake
     end
 
     ##
+    # Checks to see if the `HandBrakeCLI` instance designated by
+    # {#bin_path} is the current version.
+    #
+    # Note that `HandBrakeCLI` will always report that it is up to
+    # date if it can't connect to the update server, so this is not
+    # terribly reliable.
+    #
+    # @return [Boolean]
+    def update
+      result = @runner.run(arguments.push('--update'))
+      result.output =~ /Your version of HandBrake is up to date./i
+    end
+
+    ##
     # @private
     def arguments
       @args.collect { |req, *rest| ["--#{req.to_s.gsub('_', '-')}", *rest] }.flatten
@@ -35,5 +50,27 @@ module HandBrake
       copy.instance_eval { @args << [name, *(args.collect { |a| a.to_s })] }
       copy
     end
+
+    class PopenRunner
+      def initialize(cli_instance)
+        @cli = cli_instance
+      end
+
+      def run(arguments)
+        output = ''
+        cmd = arguments.unshift(@cli.bin_path).push(:err => [:child, :out])
+
+        $stderr.puts "Spawning HandBrakeCLI using #{cmd.inspect}" if @cli.trace?
+        IO.popen(cmd) do |io|
+          while line = io.gets
+            output << line
+            $stderr.puts(line.chomp) if @cli.trace?
+          end
+        end
+        RunnerResult.new(output, $?)
+      end
+    end
+
+    RunnerResult = Struct.new(:output, :status)
   end
 end

@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+######
+# Run irb for interactive fiddling with this library from the source
+
+require 'irb'
+
+$LOAD_PATH << File.expand_path('../lib', __FILE__)
+require 'handbrake'
+
+$cli = HandBrake::CLI.new(:trace => true)
+
+puts "`$cli` is a HandBrake::CLI instance with tracing on"
+
+IRB.start(__FILE__)

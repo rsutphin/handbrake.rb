@@ -63,7 +63,7 @@ configuration options:
   is `'HandBrakeCLI'`; i.e., by default it will be searched for on the
   normal executable path.
 * `:trace`: if true, all output from `HandBrakeCLI` will be echoed to
-  the project's output stream.
+  the project's error stream.
 
 ### Set options
 

@@ -55,5 +55,27 @@ module HandBrake
           %w(--input /foo/bar --title 6 --ipod-atom)
       end
     end
+
+    describe 'execution' do
+      let(:cli) { HandBrake::CLI.new(:runner => runner) }
+      let(:runner) { HandBrake::Spec::StaticRunner.new }
+
+      describe '#update' do
+        it 'uses the update argument' do
+          cli.update
+          runner.actual_arguments.should == %w(--update)
+        end
+
+        it 'returns true if the thing is up to date' do
+          runner.output = 'Your version of HandBrake is up to date.'
+          cli.update.should be_true
+        end
+
+        it 'returns false if the executable is out of date' do
+          runner.output = 'You are using an old version of HandBrake.'
+          cli.update.should be_false
+        end
+      end
+    end
   end
 end

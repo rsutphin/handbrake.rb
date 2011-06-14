@@ -35,3 +35,23 @@ RSpec.configure do |config|
     end
   end
 end
+
+module HandBrake
+  module Spec
+    ##
+    # A stub implementation of the runner for HandBrake::CLI.
+    class StaticRunner
+      attr_accessor :output, :status
+      attr_reader :actual_arguments
+
+      def run(args)
+        @actual_arguments = args
+        HandBrake::CLI::RunnerResult.new(output, status)
+      end
+
+      def status
+        @status ||= 0
+      end
+    end
+  end
+end
