@@ -129,6 +129,8 @@ configuration chain.
 Additional resources
 --------------------
 
+* [API docs](http://rubydoc.info/gems/handbrake.rb)
+* [Continuous integration](http://travis-ci.org/#!/rsutphin/handbrake.rb)
 * Versioning policy: [Semantic versioning](http://semver.org/)
 
 License
