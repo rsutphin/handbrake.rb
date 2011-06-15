@@ -167,6 +167,11 @@ module HandBrake
     attr_accessor :duration
 
     ##
+    # @return [Fixnum] The chapter number for this chapter (a positive
+    #   integer)
+    attr_accessor :number
+
+    ##
     # Creates a new instance from the given title subtree.
     #
     # @see Title.from_tree
@@ -175,6 +180,7 @@ module HandBrake
     def self.from_tree(chapter_node)
       self.new.tap do |ch|
         ch.duration = chapter_node.name.scan(/duration (\d\d:\d\d:\d\d)/).first.first
+        ch.number = chapter_node.name.scan(/(\d+): cells/).first.first.to_i
       end
     end
   end

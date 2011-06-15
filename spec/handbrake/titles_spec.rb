@@ -83,6 +83,10 @@ module HandBrake
       it 'has the duration in seconds' do
         chapter.seconds.should == 203
       end
+
+      it 'has the number' do
+        chapter.number.should == 5
+      end
     end
   end
 end
