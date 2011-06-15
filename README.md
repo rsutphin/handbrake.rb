@@ -129,7 +129,8 @@ configuration chain.
 Additional resources
 --------------------
 
-* [API docs](http://rubydoc.info/gems/handbrake.rb)
+* API docs: [last release](http://rubydoc.info/gems/handbrake) or
+  [in development](http://rubydoc.info/github/rsutphin/handbrake.rb/master/frames)
 * [Continuous integration](http://travis-ci.org/#!/rsutphin/handbrake.rb)
   (note that right now this link only works when there has been a
   recent build)
