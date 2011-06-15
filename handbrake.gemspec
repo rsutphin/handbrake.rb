@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Rhett Sutphin"]
   s.email       = ["rhett@detailedbalance.net"]
-  s.homepage    = "https://github.com/rsutphin/handbrake-ruby"
+  s.homepage    = "https://github.com/rsutphin/handbrake.rb"
   s.summary     = %q{A ruby wrapper for HandBrakeCLI}
   s.description = %q{A lightweight literate ruby wrapper for HandBrakeCLI, the command-line interface for the HandBrake video transcoder.}
 
