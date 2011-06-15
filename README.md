@@ -45,7 +45,7 @@ A brief sample:
     titles[1].duration            # => "01:21:18"
     titles[1].seconds             # => 4878
     titles[1].chapters.size       # => 23
-    titles[1].chapters[2].seconds # => 208
+    titles[1].chapters[3].seconds # => 208
 
     project.title(1).
       preset('Normal').

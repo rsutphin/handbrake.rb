@@ -136,7 +136,8 @@ module HandBrake
           detect { |c| c.name =~ /duration/ }.name.
           scan(/duration: (\d\d:\d\d:\d\d)/).first.first
         title.chapters = title_node['chapters:'].children.
-          collect { |ch_node| Chapter.from_tree(ch_node) }
+          collect { |ch_node| Chapter.from_tree(ch_node) }.
+          inject({}) { |h, ch| h[ch.number] = ch; h }
         title.main_feature = title_node.children.detect { |c| c.name =~ /Main Feature/ }
       end
     end
@@ -149,10 +150,17 @@ module HandBrake
     end
 
     ##
-    # @return [Array<Chapter>] The chapters into which the title is
-    #   divided.
+    # @return [Hash<Fixnum,Chapter>] The chapters into which the title is
+    #   divided, indexed by chapter number (a positive integer).
     def chapters
-      @chapters ||= []
+      @chapters ||= {}
+    end
+
+    ##
+    # @return [Array<Chapter>] The chapters of the title, sorted by
+    #   chapter number.
+    def all_chapters
+      chapters.keys.sort.collect { |k| chapters[k] }
     end
   end
 

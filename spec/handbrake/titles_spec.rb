@@ -69,12 +69,23 @@ module HandBrake
       title_3.seconds.should == 6234
     end
 
-    it 'has all the chapters' do
+    it 'has the right number of chapters' do
       title_3.should have(13).chapters
     end
 
+    it 'has chapters indexed by chapter number' do
+      title_3.chapters[2].tap do |c|
+        c.duration.should == '00:00:52'
+        c.number.should == 2
+      end
+    end
+
+    it 'has an array of the chapters in order' do
+      title_3.all_chapters.collect { |ch| ch.number }.should == (1..13).to_a
+    end
+
     describe 'a chapter' do
-      let(:chapter) { title_3.chapters[4] }
+      let(:chapter) { title_3.chapters[5] }
 
       it 'has the duration' do
         chapter.duration.should == '00:03:23'
