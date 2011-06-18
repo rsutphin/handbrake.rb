@@ -71,7 +71,7 @@ module HandBrake
         end
 
         it 'works' do
-          lambda { cli.update }.should_not raise_error
+          lambda { cli.preset_list }.should_not raise_error
         end
       end
 
