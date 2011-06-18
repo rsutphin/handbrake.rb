@@ -80,6 +80,75 @@ module HandBrake
           cli.output('/foo/bar.m4v')
           runner.actual_arguments.should == %w(--output /foo/bar.m4v)
         end
+
+        it 'fails for an unknown option' do
+          lambda { cli.output('/foo/bar.m4v', :quux => 'zap') }.
+            should raise_error('Unknown options for output: [:quux]')
+        end
+
+        describe ':overwrite' do
+          let(:filename) { File.join(tmpdir, 'foo.m4v') }
+
+          def it_should_have_run
+            runner.actual_arguments.should == ['--output', filename]
+          end
+
+          def it_should_not_have_run
+            runner.actual_arguments.should be_nil
+          end
+
+          context 'true' do
+            it 'executes when the file does not exist' do
+              cli.output(filename, :overwrite => true)
+              it_should_have_run
+            end
+
+            it 'executes when the file exists' do
+              FileUtils.touch filename
+              cli.output(filename, :overwrite => true)
+              it_should_have_run
+            end
+
+            it 'is the default' do
+              FileUtils.touch filename
+              cli.output(filename)
+              it_should_have_run
+            end
+          end
+
+          context 'false' do
+            it 'executes when the file does not exist' do
+              cli.output(filename, :overwrite => false)
+              it_should_have_run
+            end
+
+            it 'throws an exception when the file does exist' do
+              FileUtils.touch filename
+              lambda { cli.output(filename, :overwrite => false) }.
+                should raise_error(HandBrake::FileExistsError)
+            end
+          end
+
+          context ':ignore' do
+            it 'executes when the file does not exist' do
+              cli.output(filename, :overwrite => :ignore)
+              it_should_have_run
+            end
+
+            it 'does nothing when the file does exist' do
+              FileUtils.touch filename
+              cli.output(filename, :overwrite => :ignore)
+              it_should_not_have_run
+            end
+          end
+
+          context 'other value' do
+            it 'throws an exception' do
+              lambda { cli.output(filename, :overwrite => 'flip') }.
+                should raise_error('Unsupported value for :overwrite: "flip"')
+            end
+          end
+        end
       end
 
       describe '#scan' do

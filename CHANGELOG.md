@@ -1,5 +1,8 @@
-0.1.1
+0.2.0
 =====
+
+- Support overwrite detection and behaviors for the
+  {HandBrake::CLI#output}.
 
 0.1.0
 =====

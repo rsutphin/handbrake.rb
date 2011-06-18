@@ -126,6 +126,13 @@ To put it more technically, the chain object returned from each
 intermediate configuration step returns an independent copy of the
 configuration chain.
 
+### Output options
+
+By default, the `output` execution method behaves just like invoking
+HandBrakeCLI directly. `handbrake.rb` also supports a couple of
+additional behaviors, including overwrite detection and atomic output
+file creation. See {HandBrake::CLI#output} for more details.
+
 Additional resources
 --------------------
 

@@ -2,6 +2,7 @@ require 'bundler'
 Bundler.setup
 
 require 'rspec'
+require 'fileutils'
 
 $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 
@@ -23,17 +24,19 @@ RSpec.configure do |config|
   def tmpdir(sub=nil)
     @tmpdir ||= begin
                   dirname = File.expand_path("../tmp", __FILE__)
-                  mkdir_p dirname
+                  FileUtils.mkdir_p dirname
                   dirname
                 end
     if sub
       full = File.join(@tmpdir, sub)
-      mkdir_p full
+      FileUtils.mkdir_p full
       full
     else
       @tmpdir
     end
   end
+
+  config.after { FileUtils.rm_rf @tmpdir if @tmpdir }
 end
 
 module HandBrake

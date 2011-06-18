@@ -59,8 +59,37 @@ module HandBrake
     # Performs a conversion. This method immediately begins the
     # transcoding process; set all other options first.
     #
+    # @param [String] filename the desired name for the final output
+    #   file
+    # @param [Hash] options additional options to control the behavior
+    #   of the output process
+    # @option options [Boolean,:ignore] :overwrite (true) determines
+    #   the behavior if the desired output file already exists. If
+    #   `true`, the file is replaced. If `false`, an exception is
+    #   thrown. If `:ignore`, the file is skipped; i.e., HandBrakeCLI
+    #   is not invoked.
+    #
     # @return [void]
-    def output(filename)
+    def output(filename, options={})
+      overwrite = options.delete :overwrite
+      case overwrite
+      when true, nil
+        # no special behavior
+      when false
+        raise FileExistsError, filename if File.exist?(filename)
+      when :ignore
+        if File.exist?(filename)
+          trace "Ignoring transcode to #{filename.inspect} because it already exists"
+          return
+        end
+      else
+        raise "Unsupported value for :overwrite: #{overwrite.inspect}"
+      end
+
+      unless options.empty?
+        raise "Unknown options for output: #{options.keys.inspect}"
+      end
+
       run('--output', filename)
     end
 
@@ -134,6 +163,10 @@ module HandBrake
           raise "HandBrakeCLI execution failed (#{result.status.inspect})"
         end
       end
+    end
+
+    def trace(msg)
+      $stderr.puts msg if trace?
     end
 
     ##
