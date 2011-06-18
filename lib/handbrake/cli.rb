@@ -68,6 +68,15 @@ module HandBrake
     #   `true`, the file is replaced. If `false`, an exception is
     #   thrown. If `:ignore`, the file is skipped; i.e., HandBrakeCLI
     #   is not invoked.
+    # @option options [Boolean] :atomic (false) provides a
+    #   pseudo-atomic mode for transcoded output. If true, the
+    #   transcode will go into a temporary file and only be copied to
+    #   the specified filename if it completes. The temporary filename
+    #   is the target filename with `.handbrake` appended. Any
+    #   `:overwrite` checking will be applied to the target filename
+    #   both before and after the transcode happens (the temporary
+    #   file will always be overwritten). This option is intended to
+    #   aid in writing automatically resumable batch scripts.
     #
     # @return [void]
     def output(filename, options={})
@@ -86,11 +95,39 @@ module HandBrake
         raise "Unsupported value for :overwrite: #{overwrite.inspect}"
       end
 
+      atomic = options.delete :atomic
+      interim_filename =
+        if atomic
+          "#{filename}.handbrake"
+        else
+          filename
+        end
+
       unless options.empty?
         raise "Unknown options for output: #{options.keys.inspect}"
       end
 
-      run('--output', filename)
+      run('--output', interim_filename)
+
+      if filename != interim_filename
+        replace =
+          if File.exist?(filename)
+            trace "#{filename.inspect} showed up during transcode"
+            case overwrite
+            when false
+              raise FileExistsError, filename
+            when :ignore
+              trace "- will leave #{filename.inspect} as is; copy #{interim_filename.inspect} manually if you want to replace it"
+              false
+            else
+              trace '- will replace with new transcode'
+              true
+            end
+          else
+            true
+          end
+        FileUtils.mv interim_filename, filename if replace
+      end
     end
 
     ##

@@ -76,27 +76,27 @@ module HandBrake
       end
 
       describe '#output' do
+        let(:filename) { File.join(tmpdir, 'foo.m4v') }
+
+        def it_should_have_run(expected_fn=filename)
+          runner.actual_arguments.should == ['--output', expected_fn]
+        end
+
+        def it_should_not_have_run
+          runner.actual_arguments.should be_nil
+        end
+
         it 'uses the --output argument' do
-          cli.output('/foo/bar.m4v')
-          runner.actual_arguments.should == %w(--output /foo/bar.m4v)
+          cli.output(filename)
+          runner.actual_arguments.should == ['--output', filename]
         end
 
         it 'fails for an unknown option' do
-          lambda { cli.output('/foo/bar.m4v', :quux => 'zap') }.
+          lambda { cli.output(filename, :quux => 'zap') }.
             should raise_error('Unknown options for output: [:quux]')
         end
 
         describe ':overwrite' do
-          let(:filename) { File.join(tmpdir, 'foo.m4v') }
-
-          def it_should_have_run
-            runner.actual_arguments.should == ['--output', filename]
-          end
-
-          def it_should_not_have_run
-            runner.actual_arguments.should be_nil
-          end
-
           context 'true' do
             it 'executes when the file does not exist' do
               cli.output(filename, :overwrite => true)
@@ -146,6 +146,85 @@ module HandBrake
             it 'throws an exception' do
               lambda { cli.output(filename, :overwrite => 'flip') }.
                 should raise_error('Unsupported value for :overwrite: "flip"')
+            end
+          end
+        end
+
+        describe ':atomic' do
+          context 'false' do
+            it 'executes normally' do
+              cli.output(filename, :atomic => false)
+              it_should_have_run
+            end
+
+            it 'is the default' do
+              cli.output(filename)
+              it_should_have_run
+            end
+          end
+
+          context 'true' do
+            let(:expected_temporary_file) { "#{filename}.handbrake" }
+
+            it 'outputs to the temporary file {filename}.handbrake' do
+              cli.output(filename, :atomic => true)
+              it_should_have_run(expected_temporary_file)
+            end
+
+            it 'copies the output to the desired filename' do
+              cli.output(filename, :atomic => true)
+              File.read(filename).should == 'This is the file created by --output'
+            end
+
+            it 'removes the temporary file' do
+              cli.output(filename, :atomic => true)
+              File.exist?(expected_temporary_file).should be_false
+            end
+
+            it 'overwrites the temporary file if it exists' do
+              FileUtils.touch expected_temporary_file
+              cli.output(filename, :atomic => true)
+              it_should_have_run(expected_temporary_file)
+            end
+
+            describe 'and :overwrite' do
+              describe 'false' do
+                it 'throws an exception if the target filename exists initially' do
+                  FileUtils.touch filename
+                  lambda { cli.output(filename, :atomic => true, :overwrite => false) }.
+                    should raise_error(HandBrake::FileExistsError)
+                end
+
+                it 'throws an exception if the target filename exists after output' do
+                  runner.behavior = lambda { FileUtils.touch filename }
+                  lambda { cli.output(filename, :atomic => true, :overwrite => false) }.
+                    should raise_error(HandBrake::FileExistsError)
+                end
+              end
+
+              describe ':ignore' do
+                it 'does nothing if the target filename exists initially' do
+                  FileUtils.touch filename
+                  cli.output(filename, :atomic => true, :overwrite => :ignore)
+                  it_should_not_have_run
+                end
+
+                it 'does not copy the output if the target filename exists after encoding' do
+                  runner.behavior = lambda {
+                    File.open(filename, 'w') { |f| f.write 'Other process result' }
+                  }
+                  cli.output(filename, :atomic => true, :overwrite => :ignore)
+                  File.read(filename).should == 'Other process result'
+                end
+
+                it 'does not remove the temporary output if the target filename exists after encoding' do
+                  runner.behavior = lambda {
+                    File.open(filename, 'w') { |f| f.write 'Other process result' }
+                  }
+                  cli.output(filename, :atomic => true, :overwrite => :ignore)
+                  File.exist?(expected_temporary_file).should be_true
+                end
+              end
             end
           end
         end
