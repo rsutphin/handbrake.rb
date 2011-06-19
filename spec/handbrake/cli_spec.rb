@@ -172,8 +172,8 @@ module HandBrake
             end
 
             it 'appends .handbraking if the output file does not have an extension' do
-              cli.output(File.join(tmpdir, 'foo'), :atomic => true)
-              it_should_have_run(File.join(tmpdir, 'foo.handbraking'))
+              cli.output(File.join(tmpdir('a.b.c'), 'foo'), :atomic => true)
+              it_should_have_run(File.join(tmpdir('a.b.c'), 'foo.handbraking'))
             end
 
             it 'copies the output to the desired filename' do

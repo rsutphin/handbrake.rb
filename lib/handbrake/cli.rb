@@ -132,8 +132,8 @@ module HandBrake
     end
 
     def partial_filename(name)
-      dot_at = name.rindex '.'
-      if dot_at
+      if File.basename(name).index '.'
+        dot_at = name.rindex '.'
         name.dup.insert dot_at, '.handbraking'
       else
         name + '.handbraking'
