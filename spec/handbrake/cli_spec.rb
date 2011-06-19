@@ -164,11 +164,16 @@ module HandBrake
           end
 
           context 'true' do
-            let(:expected_temporary_file) { "#{filename}.handbrake" }
+            let(:expected_temporary_file) { File.join(tmpdir, "foo.handbraking.m4v") }
 
-            it 'outputs to the temporary file {filename}.handbrake' do
+            it 'outputs to the temporary file with ".handbraking" inserted before the extension' do
               cli.output(filename, :atomic => true)
               it_should_have_run(expected_temporary_file)
+            end
+
+            it 'appends .handbraking if the output file does not have an extension' do
+              cli.output(File.join(tmpdir, 'foo'), :atomic => true)
+              it_should_have_run(File.join(tmpdir, 'foo.handbraking'))
             end
 
             it 'copies the output to the desired filename' do

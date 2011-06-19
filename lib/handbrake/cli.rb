@@ -72,11 +72,12 @@ module HandBrake
     #   pseudo-atomic mode for transcoded output. If true, the
     #   transcode will go into a temporary file and only be copied to
     #   the specified filename if it completes. The temporary filename
-    #   is the target filename with `.handbrake` appended. Any
-    #   `:overwrite` checking will be applied to the target filename
-    #   both before and after the transcode happens (the temporary
-    #   file will always be overwritten). This option is intended to
-    #   aid in writing automatically resumable batch scripts.
+    #   is the target filename with `.handbraking` inserted before the
+    #   extension. Any `:overwrite` checking will be applied to the
+    #   target filename both before and after the transcode happens
+    #   (the temporary file will always be overwritten). This option
+    #   is intended to aid in writing automatically resumable batch
+    #   scripts.
     #
     # @return [void]
     def output(filename, options={})
@@ -98,7 +99,7 @@ module HandBrake
       atomic = options.delete :atomic
       interim_filename =
         if atomic
-          "#{filename}.handbrake"
+          partial_filename(filename)
         else
           filename
         end
@@ -129,6 +130,16 @@ module HandBrake
         FileUtils.mv interim_filename, filename if replace
       end
     end
+
+    def partial_filename(name)
+      dot_at = name.rindex '.'
+      if dot_at
+        name.dup.insert dot_at, '.handbraking'
+      else
+        name + '.handbraking'
+      end
+    end
+    private :partial_filename
 
     ##
     # Performs a title scan. Unlike HandBrakeCLI, if you do not
