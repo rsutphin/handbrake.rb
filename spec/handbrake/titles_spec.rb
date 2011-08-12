@@ -55,6 +55,10 @@ module HandBrake
       it 'is false when it is' do
         title_3.should_not be_main_feature
       end
+
+      it 'is not a complex value when true, so that serializations are simpler' do
+        title_1.main_feature?.should == true
+      end
     end
 
     it 'has the number' do

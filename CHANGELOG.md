@@ -1,6 +1,9 @@
 0.2.1
 =====
 
+- When parsing a title scan, do not keep references to the parsed tree
+  in the {HandBrake::Title} objects.
+
 0.2.0
 =====
 

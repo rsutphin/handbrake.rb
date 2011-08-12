@@ -138,7 +138,9 @@ module HandBrake
         title.chapters = title_node['chapters:'].children.
           collect { |ch_node| Chapter.from_tree(ch_node) }.
           inject({}) { |h, ch| h[ch.number] = ch; h }
-        title.main_feature = title_node.children.detect { |c| c.name =~ /Main Feature/ }
+        # !! is so that there's no reference to the node in the
+        # resulting object
+        title.main_feature = !!title_node.children.detect { |c| c.name =~ /Main Feature/ }
       end
     end
 
