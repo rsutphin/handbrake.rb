@@ -206,7 +206,7 @@ module HandBrake
       @runner.run(arguments.push(*more_args)).tap do |result|
         unless result.status == 0
           unless trace?
-            $stderr.puts result.output
+            $stderr.write result.output
           end
           raise "HandBrakeCLI execution failed (#{result.status.inspect})"
         end
@@ -266,7 +266,7 @@ module HandBrake
         IO.popen(cmd) do |io|
           while line = io.gets
             output << line
-            $stderr.puts(line.chomp) if @cli.trace?
+            $stderr.write(line) if @cli.trace?
           end
         end
         RunnerResult.new(output, $?)
