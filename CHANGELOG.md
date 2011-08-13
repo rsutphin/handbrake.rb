@@ -1,6 +1,8 @@
 0.2.1
 =====
 
+- Include parent references in {HandBrake::Title} and
+  {HandBrake::Chapter}.
 - When parsing a title scan, do not keep references to the parsed tree
   in the {HandBrake::Title} objects.
 

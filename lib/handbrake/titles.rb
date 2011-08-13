@@ -36,6 +36,7 @@ module HandBrake
         titles.raw_output = output
         titles.raw_tree.children.
           collect { |title_node| Title.from_tree(title_node) }.
+          each { |title| title.collection = titles }.
           each { |title| titles[title.number] = title }
       end
     end
@@ -124,6 +125,10 @@ module HandBrake
     attr_writer :main_feature
 
     ##
+    # @return [Titles] The collection this title belongs to.
+    attr_accessor :collection
+
+    ##
     # Creates a new instance from the given scan subtree.
     #
     # @see Titles.from_output
@@ -137,6 +142,7 @@ module HandBrake
           scan(/duration: (\d\d:\d\d:\d\d)/).first.first
         title.chapters = title_node['chapters:'].children.
           collect { |ch_node| Chapter.from_tree(ch_node) }.
+          tap { |chapters| chapters.each { |c| c.title = title } }.
           inject({}) { |h, ch| h[ch.number] = ch; h }
         # !! is so that there's no reference to the node in the
         # resulting object
@@ -180,6 +186,10 @@ module HandBrake
     # @return [Fixnum] The chapter number for this chapter (a positive
     #   integer)
     attr_accessor :number
+
+    ##
+    # @return [Title] The title that contains this chapter
+    attr_accessor :title
 
     ##
     # Creates a new instance from the given title subtree.

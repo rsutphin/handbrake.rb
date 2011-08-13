@@ -47,6 +47,10 @@ module HandBrake
     let(:title_1) { titles[1] }
     let(:title_3) { titles[3] }
 
+    it 'has a reference to its parent collection' do
+      title_1.collection.should eql(titles)
+    end
+
     describe '#main_feature?' do
       it 'is true when it is' do
         title_1.should be_main_feature
@@ -101,6 +105,10 @@ module HandBrake
 
       it 'has the number' do
         chapter.number.should == 5
+      end
+
+      it 'has a reference to its parent' do
+        chapter.title.should eql title_3
       end
     end
   end
