@@ -6,6 +6,9 @@
   written to this path rather than the ultimate target directory.
 - Ensure that trace mode prints updating lines (e.g., the encode
   status) that do not end in newlines in a timely fashion.
+- Add property-based constructors to {HandBrake::Title} and
+  {HandBrake::Chapter} for easier construction in tests of consuming
+  apps/libs.
 
 0.2.1
 =====

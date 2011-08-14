@@ -51,6 +51,25 @@ module HandBrake
       title_1.collection.should eql(titles)
     end
 
+    describe '#initialize' do
+      describe 'without a hash' do
+        it 'works' do
+          lambda { Title.new }.should_not raise_error
+        end
+      end
+
+      describe 'with a hash' do
+        it 'can set settable properties' do
+          Title.new(:number => 5, :duration => '01:45:35').number.should == 5
+        end
+
+        it 'fails for an unknown property' do
+          lambda { Title.new(:foo => 'bar') }.
+            should raise_error('No property :foo in HandBrake::Title')
+        end
+      end
+    end
+
     describe '#main_feature?' do
       it 'is true when it is' do
         title_1.should be_main_feature
@@ -109,6 +128,27 @@ module HandBrake
 
       it 'has a reference to its parent' do
         chapter.title.should eql title_3
+      end
+    end
+  end
+
+  describe Chapter do
+    describe '#initialize' do
+      describe 'without a hash' do
+        it 'works' do
+          lambda { Chapter.new }.should_not raise_error
+        end
+      end
+
+      describe 'with a hash' do
+        it 'can set settable properties' do
+          Chapter.new(:number => 5, :duration => '01:45:35').duration.should == '01:45:35'
+        end
+
+        it 'fails for an unknown property' do
+          lambda { Chapter.new(:foo => 'bar') }.
+            should raise_error('No property :foo in HandBrake::Chapter')
+        end
       end
     end
   end

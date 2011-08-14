@@ -101,9 +101,26 @@ module HandBrake
   end
 
   ##
+  # Mix-in that provides a class with a constructor that sets any
+  # publicly writable properties from values in a hash.
+  module ConstructWithProperties
+    def initialize(properties={})
+      properties.each do |prop, value|
+        setter = :"#{prop}="
+        if self.respond_to?(setter)
+          self.send(setter, value)
+        else
+          fail("No property #{prop.inspect} in #{self.class}")
+        end
+      end
+    end
+  end
+
+  ##
   # Metadata about a single DVD title.
   class Title
     include DurationAsSeconds
+    include ConstructWithProperties
 
     ##
     # @return [Fixnum] The title number of this title (a positive integer).
@@ -176,6 +193,7 @@ module HandBrake
   # The metadata about a single chapter in a title of a DVD.
   class Chapter
     include DurationAsSeconds
+    include ConstructWithProperties
 
     ##
     # @return [String] The duration of the title in the format
