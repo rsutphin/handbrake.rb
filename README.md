@@ -99,7 +99,7 @@ come in any order, a few must come last and have particular return
 values:
 
 * `output`: triggers a transcode using all the options set up to this
-  point.
+  point. No return value.
 * `scan`: triggers a title scan and returns a `Hash`-like structure
   of {HandBrake::Title} objects describing the contents of the
   input. The hash is indexed by title number.
@@ -122,9 +122,8 @@ along different paths.  E.g.:
     # TV
     project.preset('High Profile').output('project-tv.m4v')
 
-To put it more technically, the chain object returned from each
-intermediate configuration step returns an independent copy of the
-configuration chain.
+To put it more technically, each intermediate configuration step
+returns an independent copy of the configuration chain.
 
 ### Output options
 
