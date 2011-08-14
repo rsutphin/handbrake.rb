@@ -1,6 +1,9 @@
 0.2.2
 =====
 
+- Ensure that trace mode prints updating lines (e.g., the encode
+  status) that do not end in newlines in a timely fashion.
+
 0.2.1
 =====
 

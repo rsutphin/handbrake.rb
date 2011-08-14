@@ -264,7 +264,7 @@ module HandBrake
 
         $stderr.puts "Spawning HandBrakeCLI using #{cmd.inspect}" if @cli.trace?
         IO.popen(cmd) do |io|
-          while line = io.gets
+          while line = io.read(60)
             output << line
             $stderr.write(line) if @cli.trace?
           end
