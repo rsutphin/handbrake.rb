@@ -163,32 +163,30 @@ module HandBrake
             end
           end
 
-          context 'true' do
-            let(:expected_temporary_file) { File.join(tmpdir, "foo.handbraking.m4v") }
-
+          shared_examples 'atomic enabled' do
             it 'outputs to the temporary file with ".handbraking" inserted before the extension' do
-              cli.output(filename, :atomic => true)
+              cli.output(filename, :atomic => atomic_option_value)
               it_should_have_run(expected_temporary_file)
             end
 
             it 'appends .handbraking if the output file does not have an extension' do
-              cli.output(File.join(tmpdir('a.b.c'), 'foo'), :atomic => true)
-              it_should_have_run(File.join(tmpdir('a.b.c'), 'foo.handbraking'))
+              cli.output(File.join(tmpdir('a.b.c'), 'foo'), :atomic => atomic_option_value)
+              it_should_have_run(expected_no_extension_temporary_filename)
             end
 
             it 'copies the output to the desired filename' do
-              cli.output(filename, :atomic => true)
+              cli.output(filename, :atomic => atomic_option_value)
               File.read(filename).should == 'This is the file created by --output'
             end
 
             it 'removes the temporary file' do
-              cli.output(filename, :atomic => true)
+              cli.output(filename, :atomic => atomic_option_value)
               File.exist?(expected_temporary_file).should be_false
             end
 
             it 'overwrites the temporary file if it exists' do
               FileUtils.touch expected_temporary_file
-              cli.output(filename, :atomic => true)
+              cli.output(filename, :atomic => atomic_option_value)
               it_should_have_run(expected_temporary_file)
             end
 
@@ -196,13 +194,13 @@ module HandBrake
               describe 'false' do
                 it 'throws an exception if the target filename exists initially' do
                   FileUtils.touch filename
-                  lambda { cli.output(filename, :atomic => true, :overwrite => false) }.
+                  lambda { cli.output(filename, :atomic => atomic_option_value, :overwrite => false) }.
                     should raise_error(HandBrake::FileExistsError)
                 end
 
                 it 'throws an exception if the target filename exists after output' do
                   runner.behavior = lambda { FileUtils.touch filename }
-                  lambda { cli.output(filename, :atomic => true, :overwrite => false) }.
+                  lambda { cli.output(filename, :atomic => atomic_option_value, :overwrite => false) }.
                     should raise_error(HandBrake::FileExistsError)
                 end
               end
@@ -210,7 +208,7 @@ module HandBrake
               describe ':ignore' do
                 it 'does nothing if the target filename exists initially' do
                   FileUtils.touch filename
-                  cli.output(filename, :atomic => true, :overwrite => :ignore)
+                  cli.output(filename, :atomic => atomic_option_value, :overwrite => :ignore)
                   it_should_not_have_run
                 end
 
@@ -218,7 +216,7 @@ module HandBrake
                   runner.behavior = lambda {
                     File.open(filename, 'w') { |f| f.write 'Other process result' }
                   }
-                  cli.output(filename, :atomic => true, :overwrite => :ignore)
+                  cli.output(filename, :atomic => atomic_option_value, :overwrite => :ignore)
                   File.read(filename).should == 'Other process result'
                 end
 
@@ -226,11 +224,31 @@ module HandBrake
                   runner.behavior = lambda {
                     File.open(filename, 'w') { |f| f.write 'Other process result' }
                   }
-                  cli.output(filename, :atomic => true, :overwrite => :ignore)
+                  cli.output(filename, :atomic => atomic_option_value, :overwrite => :ignore)
                   File.exist?(expected_temporary_file).should be_true
                 end
               end
             end
+          end
+
+          context 'true' do
+            let(:atomic_option_value) { true }
+            let(:expected_temporary_file) { File.join(tmpdir, "foo.handbraking.m4v") }
+            let(:expected_no_extension_temporary_filename) {
+              File.join(tmpdir('a.b.c'), 'foo.handbraking')
+            }
+
+            include_examples 'atomic enabled'
+          end
+
+          context 'an alternate path' do
+            let(:atomic_option_value) { tmpdir('somewhere/else') }
+            let(:expected_temporary_file) { File.join(atomic_option_value, "foo.handbraking.m4v") }
+            let(:expected_no_extension_temporary_filename) {
+              File.join(atomic_option_value, 'foo.handbraking')
+            }
+
+            include_examples 'atomic enabled'
           end
         end
       end

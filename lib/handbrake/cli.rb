@@ -68,16 +68,19 @@ module HandBrake
     #   `true`, the file is replaced. If `false`, an exception is
     #   thrown. If `:ignore`, the file is skipped; i.e., HandBrakeCLI
     #   is not invoked.
-    # @option options [Boolean] :atomic (false) provides a
+    # @option options [Boolean, String] :atomic (false) provides a
     #   pseudo-atomic mode for transcoded output. If true, the
     #   transcode will go into a temporary file and only be copied to
-    #   the specified filename if it completes. The temporary filename
-    #   is the target filename with `.handbraking` inserted before the
-    #   extension. Any `:overwrite` checking will be applied to the
-    #   target filename both before and after the transcode happens
-    #   (the temporary file will always be overwritten). This option
-    #   is intended to aid in writing automatically resumable batch
-    #   scripts.
+    #   the specified filename if it completes. If the value is
+    #   literally `true`, the temporary filename is the target
+    #   filename with `.handbraking` inserted before the extension. If
+    #   the value is a string, it is interpreted as a path; the
+    #   temporary file is written to this path instead of in the
+    #   ultimate target directory. Any `:overwrite` checking will be
+    #   applied to the target filename both before and after the
+    #   transcode happens (the temporary file will always be
+    #   overwritten). This option is intended to aid in writing
+    #   automatically resumable batch scripts.
     #
     # @return [void]
     def output(filename, options={})
@@ -98,10 +101,15 @@ module HandBrake
 
       atomic = options.delete :atomic
       interim_filename =
-        if atomic
+        case atomic
+        when true
           partial_filename(filename)
-        else
+        when String
+          partial_filename(File.join(atomic, File.basename(filename)))
+        when false, nil
           filename
+        else
+          fail "Unsupported value for :atomic: #{atomic.inspect}"
         end
 
       unless options.empty?
@@ -127,7 +135,7 @@ module HandBrake
           else
             true
           end
-        FileUtils.mv interim_filename, filename if replace
+        FileUtils.mv(interim_filename, filename, :verbose => trace?) if replace
       end
     end
 
