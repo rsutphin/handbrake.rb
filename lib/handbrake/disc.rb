@@ -72,6 +72,10 @@ module HandBrake
       @raw_tree = extract_tree
     end
 
+    def to_yaml_properties
+      %w(@name  @titles)
+    end
+
     private
 
     def extract_tree

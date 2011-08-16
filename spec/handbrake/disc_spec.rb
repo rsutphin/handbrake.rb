@@ -45,6 +45,44 @@ module HandBrake
           '2, Francais (AC3) (Dolby Surround) (iso639-2: fra), 48000Hz, 192000bps'
       end
     end
+
+    describe 'YAML serialization' do
+      describe 'round trip' do
+        let(:yaml) { disc.to_yaml }
+        let(:reloaded) { YAML.load(yaml) }
+
+        it 'does not include the raw output' do
+          reloaded.raw_output.should be_nil
+        end
+
+        it 'does not include the raw tree' do
+          reloaded.raw_tree.should be_nil
+        end
+
+        it 'preserves the name' do
+          reloaded.name.should == 'D2'
+        end
+
+        it 'preserves the titles' do
+          reloaded.titles.size.should == 5
+        end
+
+        it 'preserves the backreference from a title to the disc' do
+          pending "Psych issue #19" if RUBY_VERSION =~ /1.9/
+          reloaded.titles[1].disc.should eql(reloaded)
+        end
+
+        it 'preserves the chapters' do
+          reloaded.titles[3].chapters.size.should == 13
+        end
+
+        it 'preserves the backreference from a chapter to its title' do
+          pending "Psych issue #19" if RUBY_VERSION =~ /1.9/
+          title_1 = reloaded.titles[1]
+          title_1.chapters[4].title.should eql(title_1)
+        end
+      end
+    end
   end
 
   describe Title do
