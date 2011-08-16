@@ -155,13 +155,22 @@ module HandBrake
     # titles. (HandBrakeCLI defaults to only returning information for
     # title 1.)
     #
-    # @return [Titles]
+    # @return [Disc,Title] a {Disc} when scanning for all titles, or a
+    #   {Title} when scanning for one title.
     def scan
-      if arguments.include?('--title')
-        result = run('--scan')
-        Titles.from_output(result.output)
+      one_title = arguments.include?('--title')
+
+      args = %w(--scan)
+      unless one_title
+        args.unshift('--title', '0')
+      end
+
+      disc = Disc.from_output(run(*args).output)
+
+      if one_title
+        disc.titles.values.first
       else
-        title(0).scan
+        disc
       end
     end
 

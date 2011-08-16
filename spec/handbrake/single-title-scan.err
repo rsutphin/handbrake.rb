@@ -1,0 +1,96 @@
+[21:49:40] hb_init: checking cpu count
+[21:49:40] hb_init: starting libhb thread
+HandBrake rev3736 (2011081199) - Darwin x86_64 - http://handbrake.fr
+2 CPUs detected
+Opening /Volumes/Arcturan Megafreighter/DVDs/L...
+[21:49:40] hb_scan: path=/Volumes/Arcturan Megafreighter/DVDs/L, title_index=1
+libbluray/bdnav/index_parse.c:157: indx_parse(): error opening /Volumes/Arcturan Megafreighter/DVDs/L/BDMV/index.bdmv
+libbluray/bluray.c:960: nav_get_title_list(/Volumes/Arcturan Megafreighter/DVDs/L) failed (0x102013400)
+[21:49:40] bd: not a bd - trying as a stream/file instead
+libdvdnav: Using dvdnav version 4.1.3
+libdvdread: Using libdvdcss version 1.2.9 for DVD access
+libdvdread: Couldn't find device name.
+libdvdnav: Can't read name block. Probably not a DVD-ROM device.
+libdvdnav: Unable to find map file '/Users/rsutphin/.dvdnav/.map'
+libdvdnav: DVD disk reports itself with Region mask 0x00fe0000. Regions: 1
+libdvdread: Using libdvdcss version 1.2.9 for DVD access
+libdvdread: Couldn't find device name.
+[21:49:40] scan: DVD has 3 title(s)
+[21:49:40] scan: scanning title 1
+[21:49:40] scan: opening IFO for VTS 1
+[21:49:40] scan: duration is 01:21:18 (4878000 ms)
+[21:49:40] pgc_id: 1, pgn: 1: pgc: 0x101605130
+[21:49:40] scan: vts=1, ttn=1, cells=0->22, blocks=58609->58608, 2081952 blocks
+[21:49:40] scan: checking audio 1
+[21:49:40] scan: id=80bd, lang=English (AC3), 3cc=eng ext=0
+[21:49:40] scan: checking audio 2
+[21:49:40] scan: id=81bd, lang=Francais (AC3), 3cc=fra ext=0
+[21:49:40] scan: title 1 has 23 chapters
+[21:49:40] scan: chap 1 c=0->0, b=58609->108062 (49454), 120223 ms
+[21:49:40] scan: chap 2 c=1->1, b=108063->181132 (73070), 148385 ms
+[21:49:40] scan: chap 3 c=2->2, b=181133->265640 (84508), 208487 ms
+[21:49:40] scan: chap 4 c=3->3, b=265641->342075 (76435), 199636 ms
+[21:49:40] scan: chap 5 c=4->4, b=342076->464043 (121968), 322732 ms
+[21:49:40] scan: chap 6 c=5->5, b=464044->528308 (64265), 167554 ms
+[21:49:40] scan: chap 7 c=6->6, b=528309->613576 (85268), 297605 ms
+[21:49:40] scan: chap 8 c=7->7, b=613577->698083 (84507), 237727 ms
+[21:49:40] scan: chap 9 c=8->8, b=698084->832431 (134348), 291828 ms
+[21:49:40] scan: chap 10 c=9->9, b=832432->950393 (117962), 271647 ms
+[21:49:40] scan: chap 11 c=10->10, b=950394->1067913 (117520), 281843 ms
+[21:49:40] scan: chap 12 c=11->11, b=1067914->1163132 (95219), 212671 ms
+[21:49:40] scan: chap 13 c=12->12, b=1163133->1282848 (119716), 276599 ms
+[21:49:40] scan: chap 14 c=13->13, b=1282849->1330562 (47714), 120309 ms
+[21:49:40] scan: chap 15 c=14->14, b=1330563->1476681 (146119), 301613 ms
+[21:49:40] scan: chap 16 c=15->15, b=1476682->1577253 (100572), 205434 ms
+[21:49:40] scan: chap 17 c=16->16, b=1577254->1650064 (72811), 185610 ms
+[21:49:40] scan: chap 18 c=17->17, b=1650065->1744727 (94663), 195639 ms
+[21:49:40] scan: chap 19 c=18->18, b=1744728->1904668 (159941), 328863 ms
+[21:49:40] scan: chap 20 c=19->19, b=1904669->2018698 (114030), 252789 ms
+[21:49:40] scan: chap 21 c=20->20, b=2018699->2105949 (87251), 179543 ms
+[21:49:40] scan: chap 22 c=21->21, b=2105950->2140482 (34533), 64239 ms
+[21:49:40] scan: chap 23 c=22->22, b=58531->58608 (78), 7013 ms
+[21:49:40] scan: aspect = 0
+[21:49:40] scan: decoding previews for title 1
+libdvdnav: DVD disk reports itself with Region mask 0x00fe0000. Regions: 1
+[21:49:40] scan: title angle(s) 1
+[21:49:40] scan: audio 0x80bd: AC-3, rate=48000Hz, bitrate=192000 English (AC3) (2.0 ch)
+[21:49:40] scan: audio 0x81bd: AC-3, rate=48000Hz, bitrate=192000 Francais (AC3) (2.0 ch)
+Scanning title 1 of 3...
+[21:49:40] scan: 10 previews, 720x480, 23.976 fps, autocrop = 0/0/8/4, aspect 4:3, PAR 8:9
+[21:49:40] scan: title (0) job->width:624, job->height:480
+[21:49:40] libhb: scan thread found 1 valid title(s)
++ title 1:
+  + vts 1, ttn 1, cells 0->22 (2081952 blocks)
+  + duration: 01:21:18
+  + size: 720x480, pixel aspect: 8/9, display aspect: 1.33, 23.976 fps
+  + autocrop: 0/0/8/4
+  + chapters:
+    + 1: cells 0->0, 49454 blocks, duration 00:02:00
+    + 2: cells 1->1, 73070 blocks, duration 00:02:28
+    + 3: cells 2->2, 84508 blocks, duration 00:03:28
+    + 4: cells 3->3, 76435 blocks, duration 00:03:20
+    + 5: cells 4->4, 121968 blocks, duration 00:05:23
+    + 6: cells 5->5, 64265 blocks, duration 00:02:48
+    + 7: cells 6->6, 85268 blocks, duration 00:04:58
+    + 8: cells 7->7, 84507 blocks, duration 00:03:58
+    + 9: cells 8->8, 134348 blocks, duration 00:04:52
+    + 10: cells 9->9, 117962 blocks, duration 00:04:32
+    + 11: cells 10->10, 117520 blocks, duration 00:04:42
+    + 12: cells 11->11, 95219 blocks, duration 00:03:33
+    + 13: cells 12->12, 119716 blocks, duration 00:04:37
+    + 14: cells 13->13, 47714 blocks, duration 00:02:00
+    + 15: cells 14->14, 146119 blocks, duration 00:05:02
+    + 16: cells 15->15, 100572 blocks, duration 00:03:25
+    + 17: cells 16->16, 72811 blocks, duration 00:03:06
+    + 18: cells 17->17, 94663 blocks, duration 00:03:16
+    + 19: cells 18->18, 159941 blocks, duration 00:05:29
+    + 20: cells 19->19, 114030 blocks, duration 00:04:13
+    + 21: cells 20->20, 87251 blocks, duration 00:03:00
+    + 22: cells 21->21, 34533 blocks, duration 00:01:04
+    + 23: cells 22->22, 78 blocks, duration 00:00:07
+  + audio tracks:
+    + 1, English (AC3) (2.0 ch) (iso639-2: eng), 48000Hz, 192000bps
+    + 2, Francais (AC3) (2.0 ch) (iso639-2: fra), 48000Hz, 192000bps
+  + subtitle tracks:
+    + 1, Closed Captions (iso639-2: eng) (Text)(CC)
+HandBrake has exited.

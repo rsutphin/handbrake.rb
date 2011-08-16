@@ -1,6 +1,10 @@
-0.2.2
+0.3.0
 =====
 
+- Change the output from the `scan` action to be a {HandBrake::Disc}
+  object which contains a titles hash, rather than the hash directly.
+- When `scan`ning for a single title, return only a single
+  {HandBrake::Title}.
 - Accept a path for the `:atomic` option to
   {HandBrake::CLI#output}. If specified, the temporary file will be
   written to this path rather than the ultimate target directory.

@@ -5,9 +5,10 @@ module HandBrake
   autoload :VERSION, 'handbrake/version'
 
   autoload :CLI,     'handbrake/cli'
-  autoload :Titles,  'handbrake/titles'
-  autoload :Title,   'handbrake/titles'
-  autoload :Chapter, 'handbrake/titles'
+  autoload :Disc,    'handbrake/disc'
+  autoload :Title,   'handbrake/disc'
+  autoload :Titles,  'handbrake/disc'
+  autoload :Chapter, 'handbrake/disc'
 
   ##
   # The exception thrown when a file exists that shouldn't.

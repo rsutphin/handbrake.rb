@@ -255,6 +255,7 @@ module HandBrake
 
       describe '#scan' do
         let(:sample_scan) { File.read(File.expand_path('../sample-titles-scan.err', __FILE__)) }
+        let(:single_scan) { File.read(File.expand_path('../single-title-scan.err', __FILE__)) }
 
         before do
           runner.output = sample_scan
@@ -271,8 +272,8 @@ module HandBrake
         end
 
         it 'only scans the specified title if one is specified' do
-          cli.title(3).scan
-          runner.actual_arguments.should == %w(--title 3 --scan)
+          cli.title(2).scan
+          runner.actual_arguments.should == %w(--title 2 --scan)
         end
 
         it 'does not permanently modify the argument list when using the default title setting' do
@@ -280,9 +281,15 @@ module HandBrake
           cli.arguments.should_not include('--title')
         end
 
-        it 'returns titles from the output' do
-          # The details for this are tested in titles_spec
-          cli.scan.size.should == 5
+        it 'return a Disc when scanning all titles' do
+          # The details for this are tested in disc_spec
+          cli.scan.should be_a HandBrake::Disc
+        end
+
+        it 'returns a Title when scanning one title' do
+          # The details for this are tested in disc_spec
+          runner.output = single_scan
+          cli.title(2).scan.should be_a HandBrake::Title
         end
       end
 

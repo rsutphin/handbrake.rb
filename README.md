@@ -39,13 +39,13 @@ A brief sample:
 
     project = hb.input('/Volumes/Arcturan Megafreighter/DVDs/L')
 
-    titles = project.scan
-    titles[1].number              # => 1
-    titles[1].main_feature?       # => true
-    titles[1].duration            # => "01:21:18"
-    titles[1].seconds             # => 4878
-    titles[1].chapters.size       # => 23
-    titles[1].chapters[3].seconds # => 208
+    disc = project.scan
+    disc.titles[1].number              # => 1
+    disc.titles[1].main_feature?       # => true
+    disc.titles[1].duration            # => "01:21:18"
+    disc.titles[1].seconds             # => 4878
+    disc.titles[1].chapters.size       # => 23
+    disc.titles[1].chapters[3].seconds # => 208
 
     project.title(1).
       preset('Normal').
@@ -100,9 +100,8 @@ values:
 
 * `output`: triggers a transcode using all the options set up to this
   point. No return value.
-* `scan`: triggers a title scan and returns a `Hash`-like structure
-  of {HandBrake::Title} objects describing the contents of the
-  input. The hash is indexed by title number.
+* `scan`: triggers a title scan and returns either a {HandBrake::Disc}
+  (for all titles) or a {HandBrake::Title} (for a single title).
 * `update`: returns true or false depending on whether the version of
   HandBrakeCLI in use is up to date.
 * `preset_list`: returns a hash containing all the known presets and

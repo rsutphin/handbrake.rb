@@ -1,28 +1,35 @@
 require File.expand_path('../../spec_helper.rb', __FILE__)
 
 module HandBrake
-  describe Titles do
+  describe Disc do
     let(:body) { File.read(File.expand_path('../sample-titles-scan.err', __FILE__)) }
-    let(:titles) { Titles.from_output(body) }
+    let(:disc) { Disc.from_output(body) }
+    let(:titles) { disc.titles }
 
-    it 'contains all the titles' do
-      titles.size.should == 5
+    describe '#titles' do
+      it 'contains all the titles' do
+        titles.size.should == 5
+      end
+
+      it 'indexes the titles correctly' do
+        titles[3].number.should == 3
+      end
+
+      it 'is enumerable' do
+        titles.collect { |k, v| k }.sort.should == [1, 2, 3, 6, 11]
+      end
     end
 
-    it 'indexes the titles correctly' do
-      titles[3].number.should == 3
-    end
-
-    it 'is enumerable' do
-      titles.collect { |k, v| k }.sort.should == [1, 2, 3, 6, 11]
+    it 'extracts the name' do
+      disc.name.should == 'D2'
     end
 
     it 'contains a reference to the full output' do
-      titles.raw_output.should == body
+      disc.raw_output.should == body
     end
 
     describe "#raw_tree" do
-      let(:tree) { titles.raw_tree }
+      let(:tree) { disc.raw_tree }
 
       it 'has the raw values at the top level of nodes' do
         tree.children.collect { |c| c.name }.should ==
@@ -42,13 +49,14 @@ module HandBrake
 
   describe Title do
     let(:body) { File.read(File.expand_path('../sample-titles-scan.err', __FILE__)) }
-    let(:titles) { Titles.from_output(body) }
+    let(:disc) { Disc.from_output(body) }
+    let(:titles) { disc.titles }
 
     let(:title_1) { titles[1] }
     let(:title_3) { titles[3] }
 
-    it 'has a reference to its parent collection' do
-      title_1.collection.should eql(titles)
+    it 'has a reference to its parent disc' do
+      title_1.disc.should be disc
     end
 
     describe '#initialize' do

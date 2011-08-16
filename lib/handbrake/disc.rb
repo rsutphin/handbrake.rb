@@ -4,13 +4,12 @@ require 'handbrake'
 
 module HandBrake
   ##
-  # And enhanced `Hash` which can self-parse the output from
-  # HandBrakeCLI's `--scan` mode. The keys of this hash will be title
-  # numbers and the values will be {Title} instances.
+  # An object representation of the output from HandBrakeCLI's
+  # `--scan` mode.
   #
   # @see Title
   # @see Chapter
-  class Titles < Hash
+  class Disc
     ##
     # The HandBrakeCLI scan output from which this instance was
     # parsed, if available.
@@ -26,18 +25,37 @@ module HandBrake
     attr_reader :raw_tree
 
     ##
-    # Builds a new {Titles} instance from the output of `HandBrakeCLI
+    # The titles in the disc. The keys are the title numbers.
+    #
+    # @return [Hash<Fixnum, Title>]
+    attr_reader :titles
+
+    ##
+    # The name of the disc.
+    #
+    # @return [String]
+    attr_accessor :name
+
+    def initialize(name=nil)
+      @name = name
+      @titles = {}
+    end
+
+    ##
+    # Builds a new {Disc} instance from the output of `HandBrakeCLI
     # --scan`.
     #
     # @param [String] output the raw contents from the scan
-    # @return [Titles] a new, completely initialized title catalog
+    # @return [Disc] a new, completely initialized title catalog
     def self.from_output(output)
-      self.new.tap do |titles|
-        titles.raw_output = output
-        titles.raw_tree.children.
+      name = File.basename(
+        output.split("\n").grep(/hb_scan/).first.scan(/path=([^,]*),/).first.first)
+      self.new(name).tap do |disc|
+        disc.raw_output = output
+        disc.raw_tree.children.
           collect { |title_node| Title.from_tree(title_node) }.
-          each { |title| title.collection = titles }.
-          each { |title| titles[title.number] = title }
+          each { |title| title.disc = disc }.
+          each { |title| disc.titles[title.number] = title }
       end
     end
 
@@ -142,8 +160,8 @@ module HandBrake
     attr_writer :main_feature
 
     ##
-    # @return [Titles] The collection this title belongs to.
-    attr_accessor :collection
+    # @return [Disc] The disc this title belongs to.
+    attr_accessor :disc
 
     ##
     # Creates a new instance from the given scan subtree.
