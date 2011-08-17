@@ -1,5 +1,5 @@
 module HandBrake
   ##
   # The current version
-  VERSION = '0.3.0'
+  VERSION = '0.3.1.pre'
 end
