@@ -20,17 +20,27 @@ module HandBrake
     attr_writer :trace
 
     ##
+    # Set whether dry_run mode is selected.
+    #
+    # @return [Boolean]
+    attr_writer :dry_run
+
+    ##
     # @param [Hash] options
     # @option options [String] :bin_path ('HandBrakeCLI') the full
     #   path to the executable to use
     # @option options [Boolean] :trace (false) whether {#trace?} is
     #   enabled
+    # @option options [Boolean] :dry_run (false) if true, nothing will
+    #   actually be executed. The commands that would have been
+    #   executed will be printed to standard out.
     # @option options [#run] :runner (a PopenRunner instance) the class
     #   encapsulating the execution method for HandBrakeCLI. You
     #   shouldn't usually need to replace this.
     def initialize(options={})
       @bin_path = options[:bin_path] || 'HandBrakeCLI'
       @trace = options[:trace].nil? ? false : options[:trace]
+      @dry_run = options[:dry_run] || false
       @runner = options[:runner] || PopenRunner.new(self)
 
       @args = []
@@ -55,6 +65,24 @@ module HandBrake
     def trace?
       @trace
     end
+
+    ##
+    # Is this instance in `dry_run` mode?
+    #
+    # If it is, then no commands will actually be executed. The
+    # constructed `HandBrakeCLI` invocations will be printed to
+    # standard out, instead.
+    def dry_run?
+      @dry_run
+    end
+
+    def fileutils_options
+      {
+        :noop => dry_run?,
+        :verbose => trace? || dry_run?
+      }
+    end
+    private :fileutils_options
 
     ##
     # Performs a conversion. This method immediately begins the
@@ -118,7 +146,7 @@ module HandBrake
         raise "Unknown options for output: #{options.keys.inspect}"
       end
 
-      FileUtils.mkdir_p(File.dirname(interim_filename))
+      FileUtils.mkdir_p(File.dirname(interim_filename), fileutils_options)
       run('--output', interim_filename)
 
       if filename != interim_filename
@@ -138,8 +166,8 @@ module HandBrake
           else
             true
           end
-        FileUtils.mkdir_p(File.dirname(filename))
-        FileUtils.mv(interim_filename, filename, :verbose => trace?) if replace
+        FileUtils.mkdir_p(File.dirname(filename), fileutils_options)
+        FileUtils.mv(interim_filename, filename, fileutils_options) if replace
       end
     end
 
@@ -284,13 +312,18 @@ module HandBrake
         cmd = "'" + arguments.unshift(@cli.bin_path).join("' '") + "' 2>&1"
 
         $stderr.puts "Spawning HandBrakeCLI using #{cmd.inspect}" if @cli.trace?
-        IO.popen(cmd) do |io|
-          while line = io.read(60)
-            output << line
-            $stderr.write(line) if @cli.trace?
+        if @cli.dry_run?
+          puts cmd
+          RunnerResult.new('', 0)
+        else
+          IO.popen(cmd) do |io|
+            while line = io.read(60)
+              output << line
+              $stderr.write(line) if @cli.trace?
+            end
           end
+          RunnerResult.new(output, $?)
         end
-        RunnerResult.new(output, $?)
       end
     end
 

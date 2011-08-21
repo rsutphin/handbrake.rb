@@ -1,6 +1,9 @@
 0.3.1
 =====
 
+- Add `:dry_run` option for {HandBrake::CLI}. When true, the commands
+  that would be executed otherwise are printed to standard out
+  instead.
 - Ensure that the directories needed by a call to
   {HandBrake::CLI#output} exist before writing to them.
 - Ensure that the options hash passed into #output is not modified.
