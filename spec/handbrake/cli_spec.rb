@@ -96,6 +96,12 @@ module HandBrake
             should raise_error('Unknown options for output: [:quux]')
         end
 
+        it 'does not directly modify the passed-in options hash' do
+          options = { :overwrite => true }
+          cli.output(filename, options)
+          options[:overwrite].should be_true
+        end
+
         it 'creates the target directory when it does not exist' do
           new_dir = File.join(tmpdir, 'quux')
           cli.output(File.join(new_dir, 'baz.m4v'))

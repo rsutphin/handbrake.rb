@@ -3,6 +3,7 @@
 
 - Ensure that the directories needed by a call to
   {HandBrake::CLI#output} exist before writing to them.
+- Ensure that the options hash passed into #output is not modified.
 
 0.3.0
 =====

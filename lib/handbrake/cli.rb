@@ -61,9 +61,9 @@ module HandBrake
     # transcoding process; set all other options first.
     #
     # @param [String] filename the desired name for the final output
-    #   file
+    #   file.
     # @param [Hash] options additional options to control the behavior
-    #   of the output process
+    #   of the output process. The provided hash will not be modified.
     # @option options [Boolean,:ignore] :overwrite (true) determines
     #   the behavior if the desired output file already exists. If
     #   `true`, the file is replaced. If `false`, an exception is
@@ -85,6 +85,7 @@ module HandBrake
     #
     # @return [void]
     def output(filename, options={})
+      options = options.dup
       overwrite = options.delete :overwrite
       case overwrite
       when true, nil
