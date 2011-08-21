@@ -1,6 +1,9 @@
 0.3.1
 =====
 
+- Ensure that the directories needed by a call to
+  {HandBrake::CLI#output} exist before writing to them.
+
 0.3.0
 =====
 

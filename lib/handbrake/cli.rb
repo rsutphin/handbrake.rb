@@ -1,4 +1,5 @@
 require 'handbrake'
+require 'fileutils'
 
 module HandBrake
   ##
@@ -116,6 +117,7 @@ module HandBrake
         raise "Unknown options for output: #{options.keys.inspect}"
       end
 
+      FileUtils.mkdir_p(File.dirname(interim_filename))
       run('--output', interim_filename)
 
       if filename != interim_filename
@@ -135,6 +137,7 @@ module HandBrake
           else
             true
           end
+        FileUtils.mkdir_p(File.dirname(filename))
         FileUtils.mv(interim_filename, filename, :verbose => trace?) if replace
       end
     end

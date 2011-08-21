@@ -96,6 +96,12 @@ module HandBrake
             should raise_error('Unknown options for output: [:quux]')
         end
 
+        it 'creates the target directory when it does not exist' do
+          new_dir = File.join(tmpdir, 'quux')
+          cli.output(File.join(new_dir, 'baz.m4v'))
+          File.directory?(new_dir).should be_true
+        end
+
         describe ':overwrite' do
           context 'true' do
             it 'executes when the file does not exist' do
@@ -179,12 +185,19 @@ module HandBrake
               File.read(filename).should == 'This is the file created by --output'
             end
 
+            it 'creates the directory for the desired filename if necessary' do
+              new_dir = File.join(tmpdir, 'quux')
+              cli.output(File.join(new_dir, 'baz.m4v'), :atomic => atomic_option_value)
+              File.directory?(new_dir).should be_true
+            end
+
             it 'removes the temporary file' do
               cli.output(filename, :atomic => atomic_option_value)
               File.exist?(expected_temporary_file).should be_false
             end
 
             it 'overwrites the temporary file if it exists' do
+              FileUtils.mkdir_p File.dirname(expected_temporary_file)
               FileUtils.touch expected_temporary_file
               cli.output(filename, :atomic => atomic_option_value)
               it_should_have_run(expected_temporary_file)
@@ -242,7 +255,7 @@ module HandBrake
           end
 
           context 'an alternate path' do
-            let(:atomic_option_value) { tmpdir('somewhere/else') }
+            let(:atomic_option_value) { File.join(tmpdir, 'somewhere/else') } # not mkdir'd
             let(:expected_temporary_file) { File.join(atomic_option_value, "foo.handbraking.m4v") }
             let(:expected_no_extension_temporary_filename) {
               File.join(atomic_option_value, 'foo.handbraking')
