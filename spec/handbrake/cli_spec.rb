@@ -375,7 +375,7 @@ module HandBrake
 
       it 'escapes single quotes in the arguments' do
         subject.command(["--output", "/quux/boo's.m4v"]).
-          should == "'/foo/hbcli' '--output' '/quux/boo\'s.m4v' 2>&1"
+          should == %('/foo/hbcli' '--output' '/quux/boo'\\''s.m4v' 2>&1)
       end
     end
   end

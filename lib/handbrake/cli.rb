@@ -329,7 +329,7 @@ module HandBrake
       ##
       # @return [String] the concatentated command string to pass to IO.popen.
       def command(arguments)
-        "'#{arguments.unshift(@cli.bin_path).collect { |a| a.gsub(%r('), %(\')) }.join("' '")}' 2>&1"
+        "'#{arguments.unshift(@cli.bin_path).collect { |a| a.gsub(%r(')) { %('\\\'') } }.join("' '")}' 2>&1"
       end
     end
 
