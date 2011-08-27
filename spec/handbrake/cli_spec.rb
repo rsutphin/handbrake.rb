@@ -356,4 +356,27 @@ module HandBrake
       end
     end
   end
+
+  describe CLI::PopenRunner do
+    describe '#command' do
+      subject { CLI::PopenRunner.new(CLI.new(:bin_path => '/foo/hbcli')) }
+
+      it 'starts with the bin path' do
+        subject.command(%w(--bar)).should =~ %r{^'/foo/hbcli'}
+      end
+
+      it 'quotes the arguments' do
+        subject.command(%w(--bar)).should =~ %r{'--bar'}
+      end
+
+      it 'redirects stderr to stdout' do
+        subject.command([]).should =~ %r{2>&1$}
+      end
+
+      it 'escapes single quotes in the arguments' do
+        subject.command(["--output", "/quux/boo's.m4v"]).
+          should == "'/foo/hbcli' '--output' '/quux/boo\'s.m4v' 2>&1"
+      end
+    end
+  end
 end

@@ -34,7 +34,7 @@ module HandBrake
     # @option options [Boolean] :dry_run (false) if true, nothing will
     #   actually be executed. The commands that would have been
     #   executed will be printed to standard out.
-    # @option options [#run] :runner (a PopenRunner instance) the class
+    # @option options [#run] :runner (a PopenRunner instance) the object
     #   encapsulating the execution method for HandBrakeCLI. You
     #   shouldn't usually need to replace this.
     def initialize(options={})
@@ -309,7 +309,7 @@ module HandBrake
       def run(arguments)
         output = ''
 
-        cmd = "'" + arguments.unshift(@cli.bin_path).join("' '") + "' 2>&1"
+        cmd = command(arguments)
 
         $stderr.puts "Spawning HandBrakeCLI using #{cmd.inspect}" if @cli.trace?
         if @cli.dry_run?
@@ -324,6 +324,12 @@ module HandBrake
           end
           RunnerResult.new(output, $?)
         end
+      end
+
+      ##
+      # @return [String] the concatentated command string to pass to IO.popen.
+      def command(arguments)
+        "'#{arguments.unshift(@cli.bin_path).collect { |a| a.gsub(%r('), %(\')) }.join("' '")}' 2>&1"
       end
     end
 

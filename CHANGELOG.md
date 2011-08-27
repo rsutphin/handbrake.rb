@@ -1,6 +1,9 @@
 0.3.2
 =====
 
+- Ensure that arguments that contain quotes are properly escaped
+  during execution. (#2; reported by bmatsuo)
+
 0.3.1
 =====
 
