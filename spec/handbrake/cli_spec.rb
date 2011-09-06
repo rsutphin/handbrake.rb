@@ -23,6 +23,38 @@ module HandBrake
       end
     end
 
+    describe '#runner' do
+      let(:default_runner_class) { HandBrake::CLI::PopenRunner }
+
+      it 'is a PopenRunner by default' do
+        HandBrake::CLI.new.runner.should be_a default_runner_class
+      end
+
+      it 'can be set with a static value' do
+        HandBrake::CLI.new(:runner => HandBrake::Spec::StaticRunner.new).runner.
+          should be_a HandBrake::Spec::StaticRunner
+      end
+
+      describe 'set from a lambda' do
+        let(:recorder_class) { Struct.new(:input) }
+        let(:runner_constructor) { lambda { |cli| recorder_class.new(cli) } }
+        let(:cli) { HandBrake::CLI.new(:runner => runner_constructor) }
+
+        it 'calls the lambda' do
+          cli.runner.should be_a recorder_class
+        end
+
+        it 'yields the CLI instance' do
+          cli.runner.input.should be cli
+        end
+
+        it 'uses the default if the lambda returns nil' do
+          HandBrake::CLI.new(:runner => lambda { |cli| nil }).runner.
+            should be_a default_runner_class
+        end
+      end
+    end
+
     describe "building a command" do
       let(:cli) { HandBrake::CLI.new }
 

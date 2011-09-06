@@ -1,6 +1,10 @@
-0.3.2
+0.4.0
 =====
 
+- Allow the `:runner` option for {HandBrake::CLI} to take a lambda
+  that returns the runner. (#4)
+- Document the default runner to make the runner protocol
+  explicit. (#4)
 - Ensure that arguments that contain quotes are properly escaped
   during execution. (#2; reported by bmatsuo)
 

@@ -26,6 +26,14 @@ module HandBrake
     attr_writer :dry_run
 
     ##
+    # The runner to use to actually invoke HandBrakeCLI. This should
+    # be an object following the protocol laid out in the
+    # documentation for {PopenRunner}.
+    #
+    # @return [#run]
+    attr_accessor :runner
+
+    ##
     # @param [Hash] options
     # @option options [String] :bin_path ('HandBrakeCLI') the full
     #   path to the executable to use
@@ -34,17 +42,34 @@ module HandBrake
     # @option options [Boolean] :dry_run (false) if true, nothing will
     #   actually be executed. The commands that would have been
     #   executed will be printed to standard out.
-    # @option options [#run] :runner (a PopenRunner instance) the object
-    #   encapsulating the execution method for HandBrakeCLI. You
-    #   shouldn't usually need to replace this.
+    # @option options [#run, #call] :runner (a PopenRunner instance)
+    #   the object encapsulating the execution method for HandBrakeCLI
+    #   or a lambda which may be invoked to create the runner. A lambda will
+    #   receive the {CLI} instance that's being constructed as its
+    #   sole argument.  You shouldn't usually need to replace this. If
+    #   you do, look at {#runner} for more details.
     def initialize(options={})
       @bin_path = options[:bin_path] || 'HandBrakeCLI'
       @trace = options[:trace].nil? ? false : options[:trace]
       @dry_run = options[:dry_run] || false
-      @runner = options[:runner] || PopenRunner.new(self)
+      @runner = build_runner(options[:runner])
 
       @args = []
     end
+
+    def build_runner(selected)
+      default_runner_creator = lambda { |cli| PopenRunner.new(cli) }
+
+      case
+      when selected.nil?
+        default_runner_creator.call(self)
+      when selected.respond_to?(:call)
+        selected.call(self) || default_runner_creator.call(self)
+      else
+        selected
+      end
+    end
+    private :build_runner
 
     ##
     # Ensures that `#dup` produces a separate copy.
@@ -253,7 +278,7 @@ module HandBrake
 
     def run(*more_args)
       @runner.run(arguments.push(*more_args)).tap do |result|
-        unless result.status == 0
+        unless result.status.to_i == 0
           unless trace?
             $stderr.write result.output
           end
@@ -282,13 +307,19 @@ module HandBrake
     end
 
     ##
-    # @private
     # The default runner. Uses `IO.popen` to spawn
     # HandBrakeCLI. General use of this library does not require
     # monkeying with this class.
+    #
+    # If you have non-general use case, a replacement runner must have
+    # a method matching the signature of {#run}.
+    #
+    # @see CLI#initialize the HandBrake::CLI constructor
+    # @see CLI#runner HandBrake::CLI#runner
     class PopenRunner
       ##
-      # @param [CLI] cli_instance the {CLI} instance whose configuration to share
+      # @param [CLI] cli_instance the {CLI} instance for which this
+      #   runner will execute.
       def initialize(cli_instance)
         @cli = cli_instance
       end
@@ -334,10 +365,11 @@ module HandBrake
     end
 
     ##
-    # @private
     # The raw result of one execution of HandBrakeCLI.
     #
-    # General use of the library will not require use of this class.
+    # General use of the library will not require use of this
+    # class. If you create your own {CLI#runner runner} its `run`
+    # method should return an instance of this class.
     #
     # @attr [String] output a string containing the combined output
     #   and error streams from the run
